@@ -1,0 +1,829 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="GuoZihan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用Socket网络编程来实现一个简单的RPC调用过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手撕RPC框架——实现简单的RPC调用">
+<meta property="og:url" content="https://love-enough.github.io/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/index.html">
+<meta property="og:site_name" content="无所畏惧的man">
+<meta property="og:description" content="使用Socket网络编程来实现一个简单的RPC调用过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://love-enough.github.io/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/489c162449c4444faf080dcab759fb8b.png">
+<meta property="article:published_time" content="2024-07-06T10:29:36.000Z">
+<meta property="article:modified_time" content="2024-07-06T10:32:16.458Z">
+<meta property="article:author" content="GuoZihan">
+<meta property="article:tag" content="RPC">
+<meta property="article:tag" content="项目">
+<meta property="article:tag" content="Socket">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://love-enough.github.io/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/489c162449c4444faf080dcab759fb8b.png">
+  
+  
+  
+  <title>手撕RPC框架——实现简单的RPC调用 - 无所畏惧的man</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/scrollAnimation.css">
+<link rel="stylesheet" href="/css/selection.css">
+<link rel="stylesheet" href="/css/mk.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"love-enough.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"6yoTduI2I2n2uTiOyxHOpVNZ-gzGzoHsz","app_key":"CuG32gSXDFOZPtNyZjx6BOYR","server_url":"https://6yotdui2.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>无所畏惧的man</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="手撕RPC框架——实现简单的RPC调用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        GuoZihan
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-06 18:29" pubdate>
+          2024年7月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">手撕RPC框架——实现简单的RPC调用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、场景设计"><a href="#一、场景设计" class="headerlink" title="一、场景设计"></a>一、场景设计</h1><blockquote>
+<p>现在A,B位于不同的服务器上，但现在A想调用B的某个方法，如何实现呢？</p>
+</blockquote>
+<p><strong>服务端B</strong>：<br>有一个用户表</p>
+<ol>
+<li>UserService 里有一个功能：getUserByUserId(Integer id)</li>
+<li>UserServiceImpl 实现了UserService接口和方法</li>
+</ol>
+<p><strong>客户端A</strong>：<br>调用getUserByUserId方法， 内部传一个Id给服务端，服务端查询到User对象返回给客户端</p>
+<p>如何实现以上调用过程呢？</p>
+<h1 id="二、设计思路"><a href="#二、设计思路" class="headerlink" title="二、设计思路"></a>二、设计思路</h1><blockquote>
+<p>主要考虑客户端、服务端、以及双方如何通信才能实现此功能</p>
+</blockquote>
+<h2 id="2-1-客户端的设计"><a href="#2-1-客户端的设计" class="headerlink" title="2.1 客户端的设计"></a>2.1 客户端的设计</h2><ol>
+<li>调用getUserByUserId方法时，内部将调用信息处理后发送给服务端B，告诉B我要获取User</li>
+<li>外部调用方法，内部进行其它的处理——这种场景我们可以使用动态代理的方式，改写原本方法的处理逻辑</li>
+</ol>
+<h2 id="2-2-服务端的设计"><a href="#2-2-服务端的设计" class="headerlink" title="2.2 服务端的设计"></a>2.2 服务端的设计</h2><ol>
+<li>监听到A的请求后，接收A的调用信息，并根据信息得到A想调用的服务与方法</li>
+<li>根据信息找到对应的服务，进行调用后将结果发送回给A</li>
+</ol>
+<h2 id="2-3-通信设计"><a href="#2-3-通信设计" class="headerlink" title="2.3 通信设计"></a>2.3 通信设计</h2><ol>
+<li>使用Java的socket网络编程进行通信</li>
+<li>为了方便A ，B之间 对接收的消息进行处理，我们需要将请求信息和返回信息封装成统一的消息格式</li>
+</ol>
+<h1 id="三、代码实现"><a href="#三、代码实现" class="headerlink" title="三、代码实现"></a>三、代码实现</h1><blockquote>
+<p>在此部分我们将理论转化为代码，分别实现客户端和服务端。</p>
+</blockquote>
+<p><strong>项目目录结构</strong></p>
+<p><img src="/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/489c162449c4444faf080dcab759fb8b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="3-1-定义用户信息"><a href="#3-1-定义用户信息" class="headerlink" title="3.1 定义用户信息"></a>3.1 定义用户信息</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Builder</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-comment">// 客户端和服务端共有的</span><br>    <span class="hljs-keyword">private</span> Integer id;<br>    <span class="hljs-keyword">private</span> String userName;<br>    <span class="hljs-keyword">private</span> Boolean sex;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-2-用户服务接口"><a href="#3-2-用户服务接口" class="headerlink" title="3.2 用户服务接口"></a>3.2 用户服务接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-comment">// 客户端通过这个接口调用服务端的实现类</span><br>    User <span class="hljs-title function_">getUserByUserId</span><span class="hljs-params">(Integer id)</span>;<br>    <span class="hljs-comment">//新增一个功能</span><br>    Integer <span class="hljs-title function_">insertUserId</span><span class="hljs-params">(User user)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-3-用户服务接口实现"><a href="#3-3-用户服务接口实现" class="headerlink" title="3.3 用户服务接口实现"></a>3.3 用户服务接口实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> User <span class="hljs-title function_">getUserByUserId</span><span class="hljs-params">(Integer id)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;客户端查询了&quot;</span>+id+<span class="hljs-string">&quot;的用户&quot;</span>);<br>        <span class="hljs-comment">// 模拟从数据库中取用户的行为</span><br>        <span class="hljs-type">Random</span> <span class="hljs-variable">random</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> User.builder().userName(UUID.randomUUID().toString())<br>                .id(id)<br>                .sex(random.nextBoolean()).build();<br>        <span class="hljs-keyword">return</span> user;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Integer <span class="hljs-title function_">insertUserId</span><span class="hljs-params">(User user)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;插入数据成功&quot;</span>+user.getUserName());<br>        <span class="hljs-keyword">return</span> user.getId();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-4-定义消息格式"><a href="#3-4-定义消息格式" class="headerlink" title="3.4 定义消息格式"></a>3.4 定义消息格式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//定义请求信息格式RpcRequest</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@Builder</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RpcRequest</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-comment">//服务类名，客户端只知道接口</span><br>    <span class="hljs-keyword">private</span> String interfaceName;<br>    <span class="hljs-comment">//调用的方法名</span><br>    <span class="hljs-keyword">private</span> String methodName;<br>    <span class="hljs-comment">//参数列表</span><br>    <span class="hljs-keyword">private</span> Object[] params;<br>    <span class="hljs-comment">//参数类型</span><br>    <span class="hljs-keyword">private</span> Class&lt;?&gt;[] paramsType;<br>&#125;<br><br><span class="hljs-comment">//定义返回信息格式RpcResponse（类似http格式）</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@Builder</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RpcResponse</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-comment">//状态码</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> code;<br>    <span class="hljs-comment">//状态信息</span><br>    <span class="hljs-keyword">private</span> String message;<br>    <span class="hljs-comment">//具体数据</span><br>    <span class="hljs-keyword">private</span> Object data;<br>    <span class="hljs-comment">//构造成功信息</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> RpcResponse <span class="hljs-title function_">sussess</span><span class="hljs-params">(Object data)</span>&#123;<br>        <span class="hljs-keyword">return</span> RpcResponse.builder().code(<span class="hljs-number">200</span>).data(data).build();<br>    &#125;<br>    <span class="hljs-comment">//构造失败信息</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> RpcResponse <span class="hljs-title function_">fail</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> RpcResponse.builder().code(<span class="hljs-number">500</span>).message(<span class="hljs-string">&quot;服务器发生错误&quot;</span>).build();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-5-实现动态代理类"><a href="#3-5-实现动态代理类" class="headerlink" title="3.5 实现动态代理类"></a>3.5 实现动态代理类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClientProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br>    <span class="hljs-comment">//传入参数service接口的class对象，反射封装成一个request</span><br>    <span class="hljs-keyword">private</span> String host;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> port;<br><br>    <span class="hljs-comment">//jdk动态代理，每一次代理对象调用方法，都会经过此方法增强（反射获取request对象，socket发送到服务端）</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        <span class="hljs-comment">//构建request</span><br>        RpcRequest request=RpcRequest.builder()<br>                .interfaceName(method.getDeclaringClass().getName())<br>                .methodName(method.getName())<br>                .params(args).paramsType(method.getParameterTypes()).build();<br>        <span class="hljs-comment">//IOClient.sendRequest 和服务端进行数据传输</span><br>        RpcResponse response= IOClient.sendRequest(host,port,request);<br>        <span class="hljs-keyword">return</span> response.getData();<br>    &#125;<br>     <span class="hljs-keyword">public</span> &lt;T&gt;T <span class="hljs-title function_">getProxy</span><span class="hljs-params">(Class&lt;T&gt; clazz)</span>&#123;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> Proxy.newProxyInstance(clazz.getClassLoader(), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;clazz&#125;, <span class="hljs-built_in">this</span>);<br>        <span class="hljs-keyword">return</span> (T)o;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-6-封装信息传输类"><a href="#3-6-封装信息传输类" class="headerlink" title="3.6 封装信息传输类"></a>3.6 封装信息传输类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IOClient</span> &#123;<br>    <span class="hljs-comment">//这里负责底层与服务端的通信，发送request，返回response</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> RpcResponse <span class="hljs-title function_">sendRequest</span><span class="hljs-params">(String host, <span class="hljs-type">int</span> port, RpcRequest request)</span>&#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            Socket socket=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Socket</span>(host, port);<br>            ObjectOutputStream oos=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(socket.getOutputStream());<br>            ObjectInputStream ois=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(socket.getInputStream());<br><br>            oos.writeObject(request);<br>            oos.flush();<br><br>            RpcResponse response=(RpcResponse) ois.readObject();<br>            <span class="hljs-keyword">return</span> response;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException | ClassNotFoundException e) &#123;<br>            e.printStackTrace();<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-7-定义服务端Server接口"><a href="#3-7-定义服务端Server接口" class="headerlink" title="3.7 定义服务端Server接口"></a>3.7 定义服务端Server接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">RpcServer</span> &#123;<br>    <span class="hljs-comment">//开启监听</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">(<span class="hljs-type">int</span> port)</span>;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">stop</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-8-实现RpcServer接口"><a href="#3-8-实现RpcServer接口" class="headerlink" title="3.8 实现RpcServer接口"></a>3.8 实现RpcServer接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleRPCRPCServer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">RpcServer</span> &#123;<br>    <span class="hljs-keyword">private</span> ServiceProvider serviceProvide;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">(<span class="hljs-type">int</span> port)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            ServerSocket serverSocket=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerSocket</span>(port);<br>            System.out.println(<span class="hljs-string">&quot;服务器启动了&quot;</span>);<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                <span class="hljs-comment">//如果没有连接，会堵塞在这里</span><br>                <span class="hljs-type">Socket</span> <span class="hljs-variable">socket</span> <span class="hljs-operator">=</span> serverSocket.accept();<br>                <span class="hljs-comment">//有连接，创建一个新的线程执行处理</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">WorkThread</span>(socket,serviceProvide)).start();<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">stop</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-9-实现WorkThread类"><a href="#3-9-实现WorkThread类" class="headerlink" title="3.9 实现WorkThread类"></a>3.9 实现WorkThread类</h2><blockquote>
+<p>WorkThread类负责启动线程和客户端进行数据传输，WorkThread类中的getResponse方法负责解析收到的request信息，寻找服务进行调用并返回结果。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WorkThread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Runnable</span>&#123;<br>    <span class="hljs-keyword">private</span> Socket socket;<br>    <span class="hljs-keyword">private</span> ServiceProvider serviceProvide;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            ObjectOutputStream oos=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(socket.getOutputStream());<br>            ObjectInputStream ois=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(socket.getInputStream());<br>            <span class="hljs-comment">//读取客户端传过来的request</span><br>            <span class="hljs-type">RpcRequest</span> <span class="hljs-variable">rpcRequest</span> <span class="hljs-operator">=</span> (RpcRequest) ois.readObject();<br>            <span class="hljs-comment">//反射调用服务方法获取返回值</span><br>            RpcResponse rpcResponse=getResponse(rpcRequest);<br>            <span class="hljs-comment">//向客户端写入response</span><br>            oos.writeObject(rpcResponse);<br>            oos.flush();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException | ClassNotFoundException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">private</span> RpcResponse <span class="hljs-title function_">getResponse</span><span class="hljs-params">(RpcRequest rpcRequest)</span>&#123;<br>        <span class="hljs-comment">//得到服务名</span><br>        String interfaceName=rpcRequest.getInterfaceName();<br>        <span class="hljs-comment">//得到服务端相应服务实现类</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">service</span> <span class="hljs-operator">=</span> serviceProvide.getService(interfaceName);<br>        <span class="hljs-comment">//反射调用方法</span><br>        Method method=<span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            method= service.getClass().getMethod(rpcRequest.getMethodName(), rpcRequest.getParamsType());<br>            Object invoke=method.invoke(service,rpcRequest.getParams());<br>            <span class="hljs-keyword">return</span> RpcResponse.sussess(invoke);<br>        &#125; <span class="hljs-keyword">catch</span> (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) &#123;<br>            e.printStackTrace();<br>            System.out.println(<span class="hljs-string">&quot;方法执行错误&quot;</span>);<br>            <span class="hljs-keyword">return</span> RpcResponse.fail();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-10-实现本地服务存放器"><a href="#3-10-实现本地服务存放器" class="headerlink" title="3.10 实现本地服务存放器"></a>3.10 实现本地服务存放器</h2><blockquote>
+<p>因为一个服务器会有多个服务，所以需要设置一个本地服务存放器serviceProvider存放服务，在接收到服务端的request信息之后，我们在本地服务存放器找到需要的服务，通过反射调用方法，得到结果并返回</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//本地服务存放器</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ServiceProvider</span> &#123;<br>    <span class="hljs-comment">//集合中存放服务的实例</span><br>    <span class="hljs-keyword">private</span> Map&lt;String,Object&gt; interfaceProvider;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ServiceProvider</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-built_in">this</span>.interfaceProvider=<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>    &#125;<br>    <span class="hljs-comment">//本地注册服务</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">provideServiceInterface</span><span class="hljs-params">(Object service)</span>&#123;<br>        String serviceName=service.getClass().getName();<br>        Class&lt;?&gt;[] interfaceName=service.getClass().getInterfaces();<br><br>        <span class="hljs-keyword">for</span> (Class&lt;?&gt; clazz:interfaceName)&#123;<br>            interfaceProvider.put(clazz.getName(),service);<br>        &#125;<br><br>    &#125;<br>    <span class="hljs-comment">//获取服务实例</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getService</span><span class="hljs-params">(String interfaceName)</span>&#123;<br>        <span class="hljs-keyword">return</span> interfaceProvider.get(interfaceName);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-11-客户端主程序"><a href="#3-11-客户端主程序" class="headerlink" title="3.11 客户端主程序"></a>3.11 客户端主程序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestClient</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        ClientProxy clientProxy=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ClientProxy</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-number">9999</span>);<br>        UserService proxy=clientProxy.getProxy(UserService.class);<br><br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> proxy.getUserByUserId(<span class="hljs-number">1</span>);<br>        System.out.println(<span class="hljs-string">&quot;从服务端得到的user=&quot;</span>+user.toString());<br><br>        User u=User.builder().id(<span class="hljs-number">100</span>).userName(<span class="hljs-string">&quot;wxx&quot;</span>).sex(<span class="hljs-literal">true</span>).build();<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> proxy.insertUserId(u);<br>        System.out.println(<span class="hljs-string">&quot;向服务端插入user的id&quot;</span>+id);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-12-服务端主程序"><a href="#3-12-服务端主程序" class="headerlink" title="3.12 服务端主程序"></a>3.12 服务端主程序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        UserService userService=<span class="hljs-keyword">new</span> <span class="hljs-title class_">UserServiceImpl</span>();<br><br>        ServiceProvider serviceProvider=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ServiceProvider</span>();<br>        serviceProvider.provideServiceInterface(userService);<br><br>        RpcServer rpcServer=<span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleRPCRPCServer</span>(serviceProvider);<br>        rpcServer.start(<span class="hljs-number">9999</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A1%B9%E7%9B%AE/" class="category-chain-item">项目</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6/" class="category-chain-item">手撕RPC框架</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RPC/" class="print-no-link">#RPC</a>
+      
+        <a href="/tags/%E9%A1%B9%E7%9B%AE/" class="print-no-link">#项目</a>
+      
+        <a href="/tags/Socket/" class="print-no-link">#Socket</a>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>手撕RPC框架——实现简单的RPC调用</div>
+      <div>https://love-enough.github.io/2024/07/06/手撕RPC框架——实现简单的RPC调用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>GuoZihan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月6日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年7月6日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/07/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%BC%95%E5%85%A5Netty/" title="手撕RPC框架——引入Netty">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">手撕RPC框架——引入Netty</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%89%8D%E8%A8%80/" title="手撕RPC框架——前言">
+                        <span class="hidden-mobile">手撕RPC框架——前言</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"6yoTduI2I2n2uTiOyxHOpVNZ-gzGzoHsz","appKey":"CuG32gSXDFOZPtNyZjx6BOYR","path":"window.location.pathname","placeholder":"给博主留下点什么吧！","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/scrollAnimation.js"></script>
+<script src="/js/duration.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
