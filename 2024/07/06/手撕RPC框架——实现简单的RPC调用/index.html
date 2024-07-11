@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://love-enough.github.io/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/489c162449c4444faf080dcab759fb8b.png">
 <meta property="article:published_time" content="2024-07-06T10:29:36.000Z">
-<meta property="article:modified_time" content="2024-07-06T10:32:16.458Z">
+<meta property="article:modified_time" content="2024-07-11T16:13:50.009Z">
 <meta property="article:author" content="GuoZihan">
 <meta property="article:tag" content="RPC">
 <meta property="article:tag" content="项目">
@@ -326,7 +326,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年7月6日 晚上
+                    本文最后更新于 2024年7月12日 凌晨
                   
                 
               </p>
@@ -363,7 +363,7 @@
 <p>在此部分我们将理论转化为代码，分别实现客户端和服务端。</p>
 </blockquote>
 <p><strong>项目目录结构</strong></p>
-<p><img src="/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/489c162449c4444faf080dcab759fb8b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/2024/07/06/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPC%E8%B0%83%E7%94%A8/489c162449c4444faf080dcab759fb8b.png" srcset="/img/loading.gif" lazyload alt="项目结构"></p>
 <h2 id="3-1-定义用户信息"><a href="#3-1-定义用户信息" class="headerlink" title="3.1 定义用户信息"></a>3.1 定义用户信息</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Builder</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-comment">// 客户端和服务端共有的</span><br>    <span class="hljs-keyword">private</span> Integer id;<br>    <span class="hljs-keyword">private</span> String userName;<br>    <span class="hljs-keyword">private</span> Boolean sex;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="3-2-用户服务接口"><a href="#3-2-用户服务接口" class="headerlink" title="3.2 用户服务接口"></a>3.2 用户服务接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-comment">// 客户端通过这个接口调用服务端的实现类</span><br>    User <span class="hljs-title function_">getUserByUserId</span><span class="hljs-params">(Integer id)</span>;<br>    <span class="hljs-comment">//新增一个功能</span><br>    Integer <span class="hljs-title function_">insertUserId</span><span class="hljs-params">(User user)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -461,7 +461,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年7月6日</div>
+          <div>2024年7月12日</div>
         </div>
       
       

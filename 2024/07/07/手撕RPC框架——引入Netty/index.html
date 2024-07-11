@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://love-enough.github.io/2024/07/07/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%BC%95%E5%85%A5Netty/image-20240707183605837.png">
 <meta property="og:image" content="https://love-enough.github.io/2024/07/07/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%BC%95%E5%85%A5Netty/image-20240707183638595.png">
 <meta property="article:published_time" content="2024-07-07T03:35:50.000Z">
-<meta property="article:modified_time" content="2024-07-07T11:24:10.170Z">
+<meta property="article:modified_time" content="2024-07-11T15:59:54.998Z">
 <meta property="article:author" content="GuoZihan">
 <meta property="article:tag" content="RPC">
 <meta property="article:tag" content="项目">
@@ -282,7 +282,7 @@
         
         
         
-          21 分钟
+          22 分钟
         
       </span>
     
@@ -332,7 +332,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年7月7日 晚上
+                    本文最后更新于 2024年7月11日 晚上
                   
                 
               </p>
@@ -392,7 +392,7 @@
 <p><img src="/2024/07/07/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%BC%95%E5%85%A5Netty/image-20240707183605837.png" srcset="/img/loading.gif" lazyload alt="粘包问题实例"></p>
 <h4 id="拆包-半包问题"><a href="#拆包-半包问题" class="headerlink" title="拆包&#x2F;半包问题"></a>拆包&#x2F;半包问题</h4><p>拆包问题是指发送方发送的一个大数据包被接收方拆分成多个小数据包进行接收的现象。这可能是因为底层传输层协议（如 TCP）将一个大数据包拆分成多个小的数据块进行传输，导致接收方在接收数据时分别接收了多个小数据包，造成拆开。</p>
 <p><img src="/2024/07/07/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%BC%95%E5%85%A5Netty/image-20240707183638595.png" srcset="/img/loading.gif" lazyload alt="拆包问题实例"></p>
-<h4 id="为什么会有粘包问题？"><a href="#为什么会有粘包问题？" class="headerlink" title="为什么会有粘包问题？"></a>为什么会有粘包问题？</h4><p>粘包问题通常发生在 TCP&#x2F;IP 协议中，<strong>因为 TCP 是面向连接的传输协议，它是以“流”的形式传输数据的，而“流”数据是没有明确的开始和结尾边界的，所以就会出现粘包问题</strong>。</p>
+<h4 id="xxxxxxxxxx-public-class-TestServer-public-static-void-main-String-args-UserService-userService-new-UserServiceImpl-​-ServiceProvider-serviceProvider-new-ServiceProvider-serviceProvider-provideServiceInterface-userService-​-RpcServer-rpcServer-new-SimpleRPCRPCServer-serviceProvider-rpcServer-start-9999-java"><a href="#xxxxxxxxxx-public-class-TestServer-public-static-void-main-String-args-UserService-userService-new-UserServiceImpl-​-ServiceProvider-serviceProvider-new-ServiceProvider-serviceProvider-provideServiceInterface-userService-​-RpcServer-rpcServer-new-SimpleRPCRPCServer-serviceProvider-rpcServer-start-9999-java" class="headerlink" title="xxxxxxxxxx public class TestServer {    public static void main(String[] args) {        UserService userService&#x3D;new UserServiceImpl();​        ServiceProvider serviceProvider&#x3D;new ServiceProvider();        serviceProvider.provideServiceInterface(userService);​        RpcServer rpcServer&#x3D;new SimpleRPCRPCServer(serviceProvider);        rpcServer.start(9999);    }}java"></a>xxxxxxxxxx public class TestServer {    public static void main(String[] args) {        UserService userService&#x3D;new UserServiceImpl();​        ServiceProvider serviceProvider&#x3D;new ServiceProvider();        serviceProvider.provideServiceInterface(userService);​        RpcServer rpcServer&#x3D;new SimpleRPCRPCServer(serviceProvider);        rpcServer.start(9999);    }}java</h4><p>粘包问题通常发生在 TCP&#x2F;IP 协议中，<strong>因为 TCP 是面向连接的传输协议，它是以“流”的形式传输数据的，而“流”数据是没有明确的开始和结尾边界的，所以就会出现粘包问题</strong>。</p>
 <h4 id="常见解决方案"><a href="#常见解决方案" class="headerlink" title="常见解决方案"></a>常见解决方案</h4><ul>
 <li><strong>固定大小方法</strong>：发送方和接收方固定发送数据大小，当字符长度不够时用空字符弥补，有了固定大小之后就知道每条消息的具体边界了，这样就没有粘包的问题了。</li>
 <li><strong>自定义数据协议（定义数据长度）</strong>：在 TCP 协议的基础上封装一层自定义数据协议，在自定义数据协议中，包含数据头（存储数据的大小）和 数据的具体内容，这样服务端得到数据之后，通过解析数据头就可以知道数据的具体长度了，也就没有粘包的问题了。</li>
@@ -499,7 +499,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年7月7日</div>
+          <div>2024年7月11日</div>
         </div>
       
       
