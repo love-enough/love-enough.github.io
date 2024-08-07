@@ -16,25 +16,23 @@
   <meta name="author" content="GuoZihan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="自定义实现一个熔断器，对调用端进行系统的自我保护，在一个服务作为调用端调用另外一个服务时，为了防止被调用的服务出现问题而影响到作为调用端的这个服务，这个服务也需要进行自我保护。而最有效的自我保护方式就是熔断。">
+    <meta name="description" content="网易一面（Java后端开发实习）项目你的RPC框架相较于市面上一些主流框架有什么优势呢这个感觉好像没办法回答自己的rpc框架有多好，因为市面上的主流rpc框架都做得已经很成熟了感觉，我当时回答的是，这个项目我是逐步进行优化的，从最开始的基于socket通信和动态代理进行服务调用，后期引入netty框架提高通信性能，然后又将zookeeper作为注册中心，解耦服务之间的依赖性，还实现了多种序列化方式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="熔断器的实现">
-<meta property="og:url" content="https://love-enough.github.io/2024/07/25/%E7%86%94%E6%96%AD%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="网易Java后台开发实习一面">
+<meta property="og:url" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/index.html">
 <meta property="og:site_name" content="无所畏惧的man">
-<meta property="og:description" content="自定义实现一个熔断器，对调用端进行系统的自我保护，在一个服务作为调用端调用另外一个服务时，为了防止被调用的服务出现问题而影响到作为调用端的这个服务，这个服务也需要进行自我保护。而最有效的自我保护方式就是熔断。">
+<meta property="og:description" content="网易一面（Java后端开发实习）项目你的RPC框架相较于市面上一些主流框架有什么优势呢这个感觉好像没办法回答自己的rpc框架有多好，因为市面上的主流rpc框架都做得已经很成熟了感觉，我当时回答的是，这个项目我是逐步进行优化的，从最开始的基于socket通信和动态代理进行服务调用，后期引入netty框架提高通信性能，然后又将zookeeper作为注册中心，解耦服务之间的依赖性，还实现了多种序列化方式">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://love-enough.github.io/2024/07/25/%E7%86%94%E6%96%AD%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/image-20240725090830595.png">
-<meta property="article:published_time" content="2024-07-25T00:46:12.000Z">
-<meta property="article:modified_time" content="2024-07-25T01:12:15.270Z">
+<meta property="og:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/eb4edeb2ba12210c1d2a78f40eb11d0.png">
+<meta property="article:published_time" content="2024-08-07T06:58:44.000Z">
+<meta property="article:modified_time" content="2024-08-07T14:39:19.853Z">
 <meta property="article:author" content="GuoZihan">
-<meta property="article:tag" content="八股">
-<meta property="article:tag" content="熔断器">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://love-enough.github.io/2024/07/25/%E7%86%94%E6%96%AD%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/image-20240725090830595.png">
+<meta name="twitter:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/eb4edeb2ba12210c1d2a78f40eb11d0.png">
   
   
   
-  <title>熔断器的实现 - 无所畏惧的man</title>
+  <title>网易Java后台开发实习一面 - 无所畏惧的man</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -235,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="熔断器的实现"></span>
+            <span id="subtitle" data-typed-text="网易Java后台开发实习一面"></span>
           
         </div>
 
@@ -251,8 +249,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-25 08:46" pubdate>
-          2024年7月25日 早上
+        <time datetime="2024-08-07 14:58" pubdate>
+          2024年8月7日 下午
         </time>
       </span>
     
@@ -263,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          942 字
+          2k 字
         
       </span>
     
@@ -274,7 +272,7 @@
         
         
         
-          8 分钟
+          17 分钟
         
       </span>
     
@@ -319,12 +317,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">熔断器的实现</h1>
+            <h1 id="seo-header">网易Java后台开发实习一面</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年7月25日 上午
+                    本文最后更新于 2024年8月7日 晚上
                   
                 
               </p>
@@ -332,27 +330,80 @@
             
               <div class="markdown-body">
                 
-                <h1 id="熔断器"><a href="#熔断器" class="headerlink" title="熔断器"></a>熔断器</h1><blockquote>
-<p>在一个服务作为调用端调用另外一个服务时，为了防止被调用的服务出现问题而影响到作为调用端的这个服务，这个服务也需要进行自我保护。而最有效的自我保护方式就是熔断。</p>
+                <h1 id="网易一面（Java后端开发实习）"><a href="#网易一面（Java后端开发实习）" class="headerlink" title="网易一面（Java后端开发实习）"></a>网易一面（Java后端开发实习）</h1><h2 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h2><h3 id="你的RPC框架相较于市面上一些主流框架有什么优势呢"><a href="#你的RPC框架相较于市面上一些主流框架有什么优势呢" class="headerlink" title="你的RPC框架相较于市面上一些主流框架有什么优势呢"></a>你的RPC框架相较于市面上一些主流框架有什么优势呢</h3><p>这个感觉好像没办法回答自己的rpc框架有多好，因为市面上的主流rpc框架都做得已经很成熟了感觉，我当时回答的是，这个项目我是逐步进行优化的，从最开始的基于socket通信和动态代理进行服务调用，后期引入netty框架提高通信性能，然后又将zookeeper作为注册中心，解耦服务之间的依赖性，还实现了多种序列化方式，多种负载均衡算法和多种限流算法，还引入了重试机制和熔断机制。整体做下来感觉学到了很多东西，了解一些rpc框架的设计思想。</p>
+<h3 id="为什么使用fastjosn和protobuf作为序列化框架，哪个更好一些"><a href="#为什么使用fastjosn和protobuf作为序列化框架，哪个更好一些" class="headerlink" title="为什么使用fastjosn和protobuf作为序列化框架，哪个更好一些"></a>为什么使用fastjosn和protobuf作为序列化框架，哪个更好一些</h3><blockquote>
+<p>选取合适的序列化协议，要从性能、时间开销、空间开销、通用性、兼容性和安全性上综合进行考虑，以下对几种常见的序列化方式进行比较</p>
 </blockquote>
-<h2 id="引出问题"><a href="#引出问题" class="headerlink" title="引出问题"></a>引出问题</h2><p>举个例子，假如我要发布一个服务 B，而服务 B 又依赖服务 C，当一个服务 A 来调用服务 B 时，服务 B 的业务逻辑调用服务 C，而这时服务 C 响应超时了，由于服务 B 依赖服务 C，C 超时直接导致 B 的业务逻辑一直等待，而这个时候服务 A 在频繁地调用服务 B，服务 B 就可能会因为堆积大量的请求而导致服务宕机。</p>
-<p>这还只是 A-&gt;B-&gt;C 的情况，试想一下 A-&gt;B-&gt;C-&gt;D-&gt;……呢？在整个调用链中，只要中间有一个服务出现问题，都可能会引起上游的所有服务出现一系列的问题，甚至会引起整个调用链的服务都宕机，这是非常恐怖的。</p>
-<h2 id="熔断逻辑"><a href="#熔断逻辑" class="headerlink" title="熔断逻辑"></a>熔断逻辑</h2><blockquote>
-<p>熔断设计来源于日常生活中的电路系统，在电路系统中存在一种熔断器（Circuit Breaker），它的作用就是在电流过大时自动切断电路。熔断器一般要实现三个状态：<strong>闭合、断开和半开。</strong></p>
-</blockquote>
-<p><img src="/2024/07/25/%E7%86%94%E6%96%AD%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/image-20240725090830595.png" srcset="/img/loading.gif" lazyload alt="熔断器原理"></p>
+<h4 id="Java原生的Serializable"><a href="#Java原生的Serializable" class="headerlink" title="Java原生的Serializable"></a>Java原生的Serializable</h4><p><strong>优点</strong>：</p>
 <ul>
-<li><strong>闭合</strong>：正常情况，后台会对调用失败次数进行积累，到达一定阈值或比例时则自动启动熔断机制。</li>
-<li><strong>断开</strong>：一旦对服务的调用失败次数达到一定阈值时，熔断器就会打开，这时候对服务的调用将直接返回一个预定的错误，而不执行真正的网络调用。同时，熔断器需要设置一个固定的时间间隔，当处理请求达到这个时间间隔时会进入半熔断状态。</li>
-<li><strong>半开</strong>：在半开状态下，熔断器会对通过它的部分请求进行处理，如果对这些请求的成功处理数量达到一定比例则认为服务已恢复正常，就会关闭熔断器，反之就会打开熔断器。</li>
+<li>实现较为简单</li>
+<li><strong>兼容性高</strong>，可以方便地在Java应用内部进行对象持久化和传输。</li>
 </ul>
-<p><em><strong>设计思路</strong>：在请求失败 N 次后在 X 时间内不再请求，进行熔断；然后再在 X 时间后恢复 M% 的请求，如果 M% 的请求都成功则恢复正常，关闭熔断，否则再熔断 Y 时间，依此循环。</em></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CircuitBreaker</span> &#123;<br>    <span class="hljs-comment">//当前状态</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">CircuitBreakerState</span> <span class="hljs-variable">state</span> <span class="hljs-operator">=</span> CircuitBreakerState.CLOSED;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">failureCount</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">successCount</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">requestCount</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-comment">//失败次数阈值</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> failureThreshold;<br>    <span class="hljs-comment">//半开启-》关闭状态的成功次数比例</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> halfOpenSuccessRate;<br>    <span class="hljs-comment">//恢复时间</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> retryTimePeriod;<br>    <span class="hljs-comment">//上一次失败时间</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">long</span> <span class="hljs-variable">lastFailureTime</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">CircuitBreaker</span><span class="hljs-params">(<span class="hljs-type">int</span> failureThreshold, <span class="hljs-type">double</span> halfOpenSuccessRate,<span class="hljs-type">long</span> retryTimePeriod)</span> &#123;<br>        <span class="hljs-built_in">this</span>.failureThreshold = failureThreshold;<br>        <span class="hljs-built_in">this</span>.halfOpenSuccessRate = halfOpenSuccessRate;<br>        <span class="hljs-built_in">this</span>.retryTimePeriod = retryTimePeriod;<br>    &#125;<br>    <span class="hljs-comment">//查看当前熔断器是否允许请求通过</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">allowRequest</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">long</span> <span class="hljs-variable">currentTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>        <span class="hljs-keyword">switch</span> (state) &#123;<br>            <span class="hljs-keyword">case</span> OPEN:<br>                <span class="hljs-comment">//进行时间比较，如果满足恢复时间，则变为半开状态</span><br>                <span class="hljs-keyword">if</span> (currentTime - lastFailureTime &gt; retryTimePeriod) &#123;<br>                    state = CircuitBreakerState.HALF_OPEN;<br>                    resetCounts();<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>                &#125;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">case</span> HALF_OPEN:<br>                requestCount.incrementAndGet();<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">case</span> CLOSED:<br>            <span class="hljs-keyword">default</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//记录成功</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">recordSuccess</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span> (state == CircuitBreakerState.HALF_OPEN) &#123;<br>            successCount.incrementAndGet();<br>            <span class="hljs-keyword">if</span> (successCount.get() &gt;= halfOpenSuccessRate * requestCount.get()) &#123;<br>                <span class="hljs-comment">//半开状态下请求成功次数达到预定阈值</span><br>                state = CircuitBreakerState.CLOSED;<br>                resetCounts();<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            resetCounts();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//记录失败</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">recordFailure</span><span class="hljs-params">()</span> &#123;<br>        failureCount.incrementAndGet();<br>        lastFailureTime = System.currentTimeMillis();<br>        <span class="hljs-keyword">if</span> (state == CircuitBreakerState.HALF_OPEN) &#123;<br>            state = CircuitBreakerState.OPEN;<br>            lastFailureTime = System.currentTimeMillis();<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (failureCount.get() &gt;= failureThreshold) &#123;<br>            state = CircuitBreakerState.OPEN;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//重置次数</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">resetCounts</span><span class="hljs-params">()</span> &#123;<br>        failureCount.set(<span class="hljs-number">0</span>);<br>        successCount.set(<span class="hljs-number">0</span>);<br>        requestCount.set(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> CircuitBreakerState <span class="hljs-title function_">getState</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> state;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">CircuitBreakerState</span> &#123;<br>    <span class="hljs-comment">//关闭，开启，半开启</span><br>    CLOSED, OPEN, HALF_OPEN<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/truelove12358/article/details/132027983">一文讲透自适应熔断的原理和实现_接口熔断值计算公式-CSDN博客</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_59403228/article/details/132525095">rrpc:实现熔断与限流-CSDN博客</a></li>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>序列化后的数据较大，<strong>速度相对较慢</strong></li>
+<li><strong>不支持跨语言处理</strong>，仅适用于Java环境</li>
 </ul>
+<h4 id="json"><a href="#json" class="headerlink" title="json"></a>json</h4><p><strong>优点</strong></p>
+<ul>
+<li><strong>可读性好</strong>：JSON数据以文本形式存在，易于人类阅读和编写，方便调试和日志记录。</li>
+<li><strong>跨语言支持</strong>：几乎所有主流编程语言都提供了JSON的解析和生成库，使得JSON成为跨语言数据交换的理想选择。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><strong>效率较低</strong>：相对于二进制序列化格式（如Protobuf和Hessian），JSON的解析和序列化效率较低，特别是在处理大型数据结构时。</li>
+</ul>
+<h4 id="Protobuf"><a href="#Protobuf" class="headerlink" title="Protobuf"></a>Protobuf</h4><p><strong>优点</strong></p>
+<ul>
+<li><strong>高效</strong>：Protobuf使用二进制编码，相比JSON和XML等文本格式，序列化后的数据更小，解析速度更快。</li>
+<li><strong>向前向后兼容</strong>：Protobuf支持数据结构的向前和向后兼容，可以在不破坏旧程序的情况下更新数据结构。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li><strong>可读性差</strong>：Protobuf序列化后的数据是二进制格式，不易于人类直接阅读。</li>
+<li><strong>需要定义文件</strong>：使用Protobuf需要先定义数据结构（.proto文件），然后生成序列化&#x2F;反序列化的代码。</li>
+</ul>
+<h4 id="Hessian"><a href="#Hessian" class="headerlink" title="Hessian"></a>Hessian</h4><p><strong>优点</strong></p>
+<ul>
+<li><strong>高效</strong>：Hessian是一个轻量级的remoting on http工具，提供了RMI的功能，采用二进制RPC协议，序列化效率高。</li>
+<li><strong>简单易用</strong>：Hessian协议简单，实现起来相对容易。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li><strong>可读性差</strong>：Hessian序列化后的数据也是二进制格式，不易于人类直接阅读。</li>
+<li><strong>安全性不足</strong>：Hessian传输没有加密处理，对于安全性要求高的应用可能不适用。</li>
+<li><strong>生态系统支持</strong>：相对于JSON和Protobuf，Hessian的生态系统支持可能较少。</li>
+</ul>
+<p><strong>对于Rpc框架来说，使用Protobuf或者Hessian这种序列化后为二进制格式的数据，在消息传输上相比于Json，会更加高效</strong></p>
+<h3 id="说一下粘包问题并描述你是怎么解决的使用netty有什么变化（相较于socket）"><a href="#说一下粘包问题并描述你是怎么解决的使用netty有什么变化（相较于socket）" class="headerlink" title="说一下粘包问题并描述你是怎么解决的使用netty有什么变化（相较于socket）"></a>说一下粘包问题并描述你是怎么解决的使用netty有什么变化（相较于socket）</h3><p><strong>问题描述</strong>：netty默认底层通过TCP 进行传输，TCP<strong>是面向流的协议</strong>，接收方在接收到数据时无法直接得知一条消息的具体字节数，不知道数据的界限。由于TCP的流量控制机制，发生沾包或拆包，会导致接收的一个包可能会有多条消息或者不足一条消息，从而会出现接收方少读或者多读导致消息不能读完全的情况发生。</p>
+<p>解决方法：在发送消息时，先告诉接收方消息的长度，让接收方读取指定长度的字节，就能避免这个问题；项目中通过自定义的消息传输协议来实现对沾包问题的解决。</p>
+<p>使用netty框架来代替传统的socket通信的好处：</p>
+<ul>
+<li><strong>大大提高通信性能</strong>，传统的socket基于BIO（同步阻塞）进行数据传输的，而netty基于NIO（同步非阻塞）进行数据传输</li>
+<li><strong>netty的功能较为强大</strong>，提供了对TCP、UDP、HTTP等多种协议的支持，并且很容易定制和扩展</li>
+<li><strong>netty提供了简单易用的API</strong>，而socket实现起来较为繁琐</li>
+</ul>
+<h3 id="说一下rpc和其他通信协议-比如说http有什么区别-，分布式服务中为什么要用它呢"><a href="#说一下rpc和其他通信协议-比如说http有什么区别-，分布式服务中为什么要用它呢" class="headerlink" title="说一下rpc和其他通信协议(比如说http有什么区别)，分布式服务中为什么要用它呢"></a>说一下rpc和其他通信协议(比如说http有什么区别)，分布式服务中为什么要用它呢</h3><p>RPC（Remote Procedure Call，远程过程调用）与HTTP请求的区别主要体现在以下几个方面：</p>
+<ol>
+<li><strong>接口设计</strong>：RPC是一种面向过程的调用，接口设计更灵活，可以自定义参数、返回值等。而HTTP请求则遵循RESTful原则，接口设计更规范化，参数和返回值都有一定的格式要求。</li>
+<li><strong>传输协议</strong>：RPC通常使用自定义的传输协议，例如gRPC使用H2协议，Dubbo使用Dubbo协议。而HTTP请求则使用HTTP协议进行通信。</li>
+<li><strong>性能</strong>：由于RPC使用自定义的传输协议，相对于HTTP请求更加高效，能够提供更高的性能。</li>
+<li><strong>异步性</strong>：RPC支持异步调用，可以非阻塞地执行远程过程调用，提高系统的并发能力。而HTTP请求通常是同步的，阻塞等待服务器响应。</li>
+<li><strong>服务发现和注册</strong>：RPC通常使用注册中心实现服务的发现和注册，便于服务的动态部署和管理。而HTTP请求则没有这样的机制。</li>
+</ol>
+<p>为什么我们需要RPC？主要有以下几个原因：</p>
+<ol>
+<li><strong>跨语言</strong>：RPC可以支持多种语言，不同语言编写的服务端和客户端可以通过RPC进行通信，提高了系统的可扩展性。</li>
+<li><strong>高性能</strong>：RPC相对于HTTP请求更加高效，能够提供更高的性能，适用于对性能要求较高的场景。</li>
+<li><strong>异步调用</strong>：RPC支持异步调用，可以提高系统的并发能力，适用于需要处理大量并发请求的场景。</li>
+<li><strong>服务治理</strong>：RPC通常使用注册中心实现服务的发现和注册，便于服务的动态部署和管理，提高了系统的可维护性。</li>
+</ol>
+<p>总之，RPC相对于HTTP请求具有更高的性能、更好的可扩展性和可维护性，适用于需要高性能、跨语言、动态部署的分布式系统。</p>
+<h3 id="为什么采用Zookeeper作为注册中心，他相较于有什么优势"><a href="#为什么采用Zookeeper作为注册中心，他相较于有什么优势" class="headerlink" title="为什么采用Zookeeper作为注册中心，他相较于有什么优势"></a>为什么采用Zookeeper作为注册中心，他相较于有什么优势</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cicada-smile/p/13138262.html">微服务技术栈：常见注册中心组件，对比分析 - 知了一笑 - 博客园 (cnblogs.com)</a></p>
+<p>这个好像选择zookeeper真的不太合适🤣，面试的时候还问我为什么不选择Nacos，我答了一大堆zookeeper的比如具有强一致性，还有监听机制，，这个我万万没想到啊，<strong>Nacos更适合做注册中心</strong></p>
+<p>大致原因如下，社区活跃，经过大规模业务验证，不但可以作为微服务注册中心，也支持作RPC框架Dubbo的注册中心，且有完善的中文文档，总结下来就一句话：<strong>通用中间件，省时；文档详细，省心。</strong></p>
+<h3 id="netty的零拷贝问题"><a href="#netty的零拷贝问题" class="headerlink" title="netty的零拷贝问题"></a>netty的零拷贝问题</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jK41127EP/?spm_id_from=333.337.search-card.all.click&vd_source=08080c102af1e26d657bce7e89999959">Netty 什么是零拷贝机制 面试官必问_哔哩哔哩_bilibili</a></p>
+<h3 id="MySQL的隔离级别是如何实现的"><a href="#MySQL的隔离级别是如何实现的" class="headerlink" title="MySQL的隔离级别是如何实现的"></a>MySQL的隔离级别是如何实现的</h3><h3 id="说一下Spring中的事务是怎么一回事"><a href="#说一下Spring中的事务是怎么一回事" class="headerlink" title="说一下Spring中的事务是怎么一回事"></a>说一下Spring中的事务是怎么一回事</h3><h3 id="md5加密算法可靠吗？为什么？"><a href="#md5加密算法可靠吗？为什么？" class="headerlink" title="md5加密算法可靠吗？为什么？"></a>md5加密算法可靠吗？为什么？</h3><h3 id="kafka的消息丢失了怎么办"><a href="#kafka的消息丢失了怎么办" class="headerlink" title="kafka的消息丢失了怎么办"></a>kafka的消息丢失了怎么办</h3><h3 id="如何保证redis和数据库中的数据一致性"><a href="#如何保证redis和数据库中的数据一致性" class="headerlink" title="如何保证redis和数据库中的数据一致性"></a>如何保证redis和数据库中的数据一致性</h3><h3 id="说一下你的登录逻辑"><a href="#说一下你的登录逻辑" class="headerlink" title="说一下你的登录逻辑"></a>说一下你的登录逻辑</h3><h3 id="登录逻辑中，如何防止被其他用户窃取"><a href="#登录逻辑中，如何防止被其他用户窃取" class="headerlink" title="登录逻辑中，如何防止被其他用户窃取"></a>登录逻辑中，如何防止被其他用户窃取</h3><h3 id="你该如何从0设计一个本地缓存组件，说一下大概框架思路"><a href="#你该如何从0设计一个本地缓存组件，说一下大概框架思路" class="headerlink" title="你该如何从0设计一个本地缓存组件，说一下大概框架思路"></a>你该如何从0设计一个本地缓存组件，说一下大概框架思路</h3><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><img src="/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/eb4edeb2ba12210c1d2a78f40eb11d0.png" srcset="/img/loading.gif" lazyload alt="跳跃得分"></p>
 
                 
               </div>
@@ -361,43 +412,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E9%A1%B9%E7%9B%AE/" class="category-chain-item">项目</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%92%95RPC%E6%A1%86%E6%9E%B6/" class="category-chain-item">手撕RPC框架</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E5%85%AB%E8%82%A1/" class="print-no-link">#八股</a>
-      
-        <a href="/tags/%E7%86%94%E6%96%AD%E5%99%A8/" class="print-no-link">#熔断器</a>
-      
-    </div>
   
 </div>
 
@@ -407,8 +421,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>熔断器的实现</div>
-      <div>https://love-enough.github.io/2024/07/25/熔断器的实现/</div>
+      <div>网易Java后台开发实习一面</div>
+      <div>https://love-enough.github.io/2024/08/07/网易Java后台开发实习一面/</div>
     </div>
     <div class="license-meta">
       
@@ -420,13 +434,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月25日</div>
+          <div>2024年8月7日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年7月25日</div>
+          <div>2024年8月7日</div>
         </div>
       
       
@@ -457,18 +471,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/01/LeetCode-hot100/" title="LeetCode-hot100">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode-hot100</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/24/%E5%B8%B8%E8%A7%81%E7%9A%84%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/" title="常见的限流算法及其实现">
-                        <span class="hidden-mobile">常见的限流算法及其实现</span>
+                      <a href="/2024/08/04/Java%E5%B9%B6%E5%8F%91%E5%85%AB%E8%82%A1/" title="Java并发八股">
+                        <span class="hidden-mobile">Java并发八股</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

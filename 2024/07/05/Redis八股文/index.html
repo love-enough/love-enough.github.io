@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://love-enough.github.io/2024/07/05/Redis%E5%85%AB%E8%82%A1%E6%96%87/redis.png">
 <meta property="article:published_time" content="2024-07-05T14:26:22.000Z">
-<meta property="article:modified_time" content="2024-07-06T10:26:48.242Z">
+<meta property="article:modified_time" content="2024-08-04T08:23:39.174Z">
 <meta property="article:author" content="GuoZihan">
 <meta property="article:tag" content="八股">
 <meta property="article:tag" content="Redis">
@@ -263,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          13k 字
         
       </span>
     
@@ -274,7 +274,7 @@
         
         
         
-          89 分钟
+          109 分钟
         
       </span>
     
@@ -324,7 +324,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年7月6日 晚上
+                    本文最后更新于 2024年8月4日 下午
                   
                 
               </p>
@@ -349,8 +349,8 @@
 </li>
 </ul>
 <h2 id="为什么用Redis作为MySQL的缓存？"><a href="#为什么用Redis作为MySQL的缓存？" class="headerlink" title="为什么用Redis作为MySQL的缓存？"></a>为什么用Redis作为MySQL的缓存？</h2><ul>
-<li>Redis具有高性能。用户第一次访问 MySQL 中的某些数据。这个过程会比较慢，因为是从硬盘上读取的。将该用户访问的数据缓存在 Redis 中，这样下一次再访问这些数据的时候就可以直接从缓存中获取了，操作 Redis 缓存就是直接操作内存，所以速度相当快。</li>
-<li>Redis具有高并发。直接访问 Redis 能够承受的请求是远远大于直接访问 MySQL 的，所以我们可以考虑把数据库中的部分数据转移到缓存中去，这样用户的一部分请求会直接到缓存这里而不用经过数据库。</li>
+<li>Redis具有<strong>高性能</strong>。用户第一次访问 MySQL 中的某些数据。这个过程会比较慢，因为是从硬盘上读取的。将该用户访问的数据缓存在 Redis 中，这样下一次再访问这些数据的时候就可以直接从缓存中获取了，操作 Redis 缓存就是直接操作内存，所以速度相当快。</li>
+<li>Redis具有<strong>高并发</strong>。直接访问 Redis 能够承受的请求是远远大于直接访问 MySQL 的，所以我们可以考虑把数据库中的部分数据转移到缓存中去，这样用户的一部分请求会直接到缓存这里而不用经过数据库。</li>
 </ul>
 <h2 id="Redis的数据类型以及使用场景是什么？"><a href="#Redis的数据类型以及使用场景是什么？" class="headerlink" title="Redis的数据类型以及使用场景是什么？"></a>Redis的数据类型以及使用场景是什么？</h2><p><img src="/2024/07/05/Redis%E5%85%AB%E8%82%A1%E6%96%87/%E4%BA%94%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-17201898400001.png" srcset="/img/loading.gif" lazyload alt="五种数据类型"></p>
 <ul>
@@ -414,7 +414,7 @@
 <ul>
 <li><strong>AOF 日志</strong>：每执行一条写操作命令，就把该命令以追加的方式写入到一个文件里；</li>
 <li><strong>RDB 快照</strong>：将某一时刻的内存数据，以二进制的方式写入磁盘；</li>
-<li><strong>混合持久化方式</strong>：Redis 4.0 新增的方式，集成了 AOF 和 RBD 的优点；</li>
+<li><strong>混合持久化方式</strong>：Redis 4.0 新增的方式，集成了 AOF 和 RDB 的优点；</li>
 </ul>
 <h2 id="AOF日志是如何实现的？"><a href="#AOF日志是如何实现的？" class="headerlink" title="AOF日志是如何实现的？"></a>AOF日志是如何实现的？</h2><p>Redis 在执行完一条写操作命令后，就会把该命令以追加的方式写入到一个文件里，然后 Redis 重启时，会读取该文件记录的命令，然后逐一执行命令的方式来进行数据恢复。</p>
 <h2 id="为什么先执行命令，再把数据写入日志呢？"><a href="#为什么先执行命令，再把数据写入日志呢？" class="headerlink" title="为什么先执行命令，再把数据写入日志呢？"></a>为什么先执行命令，再把数据写入日志呢？</h2><ul>
@@ -494,6 +494,11 @@
 </ul>
 </li>
 </ul>
+<h2 id="Redis的缓存失效会不会立即删除？"><a href="#Redis的缓存失效会不会立即删除？" class="headerlink" title="Redis的缓存失效会不会立即删除？"></a>Redis的缓存失效会不会立即删除？</h2><p>不会，Redis 的过期删除策略是选择「<strong>惰性删除+定期删除</strong>」这两种策略配和使用。</p>
+<ul>
+<li>惰性删除策略的做法是，<strong>不主动删除过期键，每次从数据库访问 key 时，都检测 key 是否过期，如果过期则删除该 key。</strong></li>
+<li>定期删除策略的做法是，<strong>每隔一段时间「随机」从数据库中取出一定数量的 key 进行检查，并删除其中的过期key。</strong></li>
+</ul>
 <h2 id="Redis使用的过期删除策略是什么？"><a href="#Redis使用的过期删除策略是什么？" class="headerlink" title="Redis使用的过期删除策略是什么？"></a>Redis使用的过期删除策略是什么？</h2><p>Redis 使用的过期删除策略是「<strong>惰性删除+定期删除</strong>」这两种策略配和使用。以求在合理使用 CPU 时间和避免内存浪费之间取得平衡。</p>
 <h2 id="Redis如何实现惰性删除的？"><a href="#Redis如何实现惰性删除的？" class="headerlink" title="Redis如何实现惰性删除的？"></a>Redis如何实现惰性删除的？</h2><ul>
 <li>Redis 在访问或者修改 key 之前，都会调用 expireIfNeeded 函数对其进行检查，检查 key 是否过期</li>
@@ -506,6 +511,7 @@
 <li>如果本轮检查的已过期 key 的数量，超过 5 个（20&#x2F;4），也就是「已过期 key 的数量」占比「随机抽取 key 的数量」大于 25%，则继续重复步骤 1；如果已过期的 key 比例小于 25%，则停止继续删除过期 key，然后等待下一轮再检查。</li>
 </ul>
 <p>Redis 为了保证定期删除不会出现循环过度，导致线程卡死现象，为此增加了定期删除循环流程的时间上限，默认不会超过 25ms。</p>
+<h2 id="为什么不过期就立即删除呢"><a href="#为什么不过期就立即删除呢" class="headerlink" title="为什么不过期就立即删除呢"></a>为什么不过期就立即删除呢</h2><p>在过期 key 比较多的情况下，删除过期 key 可能会占用相当一部分 CPU 时间，在内存不紧张但 CPU 时间紧张的情况下，将 CPU 时间用于删除和当前任务无关的过期键上，无疑会对服务器的响应时间和吞吐量造成影响。所以，定时删除策略对 CPU 不友好。</p>
 <h2 id="Redis持久化时，对过期键会如何处理？"><a href="#Redis持久化时，对过期键会如何处理？" class="headerlink" title="Redis持久化时，对过期键会如何处理？"></a>Redis持久化时，对过期键会如何处理？</h2><p>对于RDB文件来说，分为生成阶段和加载阶段</p>
 <ul>
 <li><strong>RDB 文件生成阶段</strong>：从内存状态持久化成 RDB（文件）的时候，会对 key 进行过期检查，<strong>过期的键「不会」被保存到新的 RDB 文件中</strong>，因此 Redis 中的过期键不会对生成新 RDB 文件产生任何影响。</li>
@@ -571,6 +577,15 @@
 <li><strong>设置空值或者默认值</strong>：当我们线上业务发现缓存穿透的现象时，可以针对查询的数据，在缓存中设置一个空值或者默认值，这样后续请求就可以从缓存中读取到空值或者默认值，返回给应用，而不会继续查询数据库。</li>
 <li><strong>使用布隆过滤器快速判断数据是否存在，避免通过查询数据库来判断数据是否存在</strong>：我们可以在写入数据库数据时，使用布隆过滤器做个标记，然后在用户请求到来时，业务线程确认缓存失效后，可以通过查询布隆过滤器快速判断数据是否存在，如果不存在，就不用通过查询数据库来判断数据是否存在，即使发生了缓存穿透，大量请求只会查询 Redis 和布隆过滤器，而不会查询数据库，保证了数据库能正常运行，Redis 自身也是支持布隆过滤器的。</li>
 </ul>
+<h2 id="说一下缓存预热"><a href="#说一下缓存预热" class="headerlink" title="说一下缓存预热"></a>说一下缓存预热</h2><p>缓存预热是指系统上线后，提前将相关的缓存数据加载到缓存系统。避免在用户请求的时候，先查询数据库，然后再将数据缓存的问题，用户直接查询事先被预热的缓存数据。</p>
+<p>如果不进行预热，那么Redis初始状态数据为空，系统上线初期，对于高并发的流量，都会访问到数据库中， 对数据库造成流量的压力。</p>
+<p><strong>缓存预热的实现方案</strong>：</p>
+<ul>
+<li>数据量不大的时候，工程启动的时候进行加载缓存动作；</li>
+<li>数据量大的时候，设置一个定时任务脚本，进行缓存的刷新；</li>
+<li>数据量太大的时候，优先保证热点数据进行提前加载到缓存。</li>
+</ul>
+<h2 id="什么是缓存降级"><a href="#什么是缓存降级" class="headerlink" title="什么是缓存降级"></a>什么是缓存降级</h2><p>缓存降级是一种在应用程序中应对高负载或缓存故障的策略。<strong>它是指当缓存服务不可用或性能下降时，应用程序主动放弃或减少对缓存的依赖，并通过其他途径来获取数据，以确保系统的可用性和稳定性</strong>。</p>
 <h2 id="如何设计一个缓存策略，可以动态缓存热点数据呢？"><a href="#如何设计一个缓存策略，可以动态缓存热点数据呢？" class="headerlink" title="如何设计一个缓存策略，可以动态缓存热点数据呢？"></a>如何设计一个缓存策略，可以动态缓存热点数据呢？</h2><p>热点数据动态缓存的策略总体思路：<strong>通过数据最新访问时间来做排名，并过滤掉不常访问的数据，只留下经常访问的数据</strong>。</p>
 <h2 id="说说常见的缓存更新策略"><a href="#说说常见的缓存更新策略" class="headerlink" title="说说常见的缓存更新策略"></a>说说常见的缓存更新策略</h2><p>实际开发中，Redis 和 MySQL 的更新策略用的是 Cache Aside，另外两种策略应用不了。</p>
 <ul>
@@ -632,6 +647,32 @@
 <h2 id="如何判断key已过期？"><a href="#如何判断key已过期？" class="headerlink" title="如何判断key已过期？"></a>如何判断key已过期？</h2><p>Redis 首先检查该 key 是否存在于过期字典中，如果不在，则正常读取键值；如果存在，则会获取该 key 的过期时间，然后与当前系统时间进行比对，如果比系统时间大，那就没有过期，否则判定该 key 已过期。</p>
 <h2 id="Redis主从节点是长连接还是短链接？"><a href="#Redis主从节点是长连接还是短链接？" class="headerlink" title="Redis主从节点是长连接还是短链接？"></a>Redis主从节点是长连接还是短链接？</h2><p>长连接</p>
 <h2 id="如何判断-Redis-某个节点是否正常工作？"><a href="#如何判断-Redis-某个节点是否正常工作？" class="headerlink" title="如何判断 Redis 某个节点是否正常工作？"></a>如何判断 Redis 某个节点是否正常工作？</h2><p>Redis 判断节点是否正常工作，基本都是通过互相的 ping-pong 心态检测机制，如果有一半以上的节点去 ping 一个节点的时候没有 pong 回应，集群就会认为这个节点挂掉了，会断开与这个节点的连接。</p>
+<h2 id="Redis主从同步中的增量和完全同步怎么实现"><a href="#Redis主从同步中的增量和完全同步怎么实现" class="headerlink" title="Redis主从同步中的增量和完全同步怎么实现"></a>Redis主从同步中的增量和完全同步怎么实现</h2><p><strong>完全同步实现的过程</strong>：</p>
+<p><img src="/2024/07/05/Redis%E5%85%AB%E8%82%A1%E6%96%87/image-20240804110955881.png" srcset="/img/loading.gif" lazyload alt="完全同步"></p>
+<ul>
+<li>从服务器发送SYNC命令：从服务器向主服务器发送<code>SYNC</code>命令，请求开始同步。</li>
+<li>主服务器生成RDB快照：接收到<code>SYNC</code>命令后，主服务器会保存当前数据集的状态到一个临时文件，这个过程称为RDB（Redis Database）快照。</li>
+<li>传输RDB快照：主服务器将生成的RDB文件发送给从服务器。</li>
+<li>从服务器接收并应用RDB文件：从服务器接收RDB文件后，会清空当前的数据集，并载入RDB文件中的数据。</li>
+<li>主服务器记录命令：在RDB文件生成和传输期间，主服务器会记录所有接收到的写命令到<code>replication backlog buffer</code>。</li>
+<li>传输写命令：一旦RDB文件传输完成，主服务器会将<code>replication backlog buffer</code>中的命令发送给从服务器，从服务器会执行这些命令，以保证数据的一致性。</li>
+</ul>
+<p><strong>增量同步的实现过程</strong>：</p>
+<p><img src="/2024/07/05/Redis%E5%85%AB%E8%82%A1%E6%96%87/image-20240804111010818.png" srcset="/img/loading.gif" lazyload alt="增量同步"></p>
+<ul>
+<li>从服务器在恢复网络后，会发送 psync 命令给主服务器，此时的 psync 命令里的 offset 参数不是 -1；</li>
+<li>主服务器收到该命令后，然后用 CONTINUE 响应命令告诉从服务器接下来采用增量复制的方式同步数据；</li>
+<li>然后主服务将主从服务器断线期间，所执行的写命令发送给从服务器，然后从服务器执行这些命令。</li>
+</ul>
+<h2 id="主服务器怎么知道要将哪些增量数据发送给从服务器呢"><a href="#主服务器怎么知道要将哪些增量数据发送给从服务器呢" class="headerlink" title="主服务器怎么知道要将哪些增量数据发送给从服务器呢"></a>主服务器怎么知道要将哪些增量数据发送给从服务器呢</h2><ul>
+<li><strong>repl_backlog_buffer</strong>，是一个「<strong>环形</strong>」缓冲区，用于主从服务器断连后，从中找到差异的数据；</li>
+<li><strong>replication offset</strong>，标记上面那个缓冲区的同步进度，主从服务器都有各自的偏移量，主服务器使用 master_repl_offset 来记录自己「<em>写</em>」到的位置，从服务器使用 slave_repl_offset 来记录自己「<em>读</em>」到的位置。</li>
+</ul>
+<p>在主服务器进行命令传播时，不仅会将写命令发送给从服务器，还会将写命令写入到 repl_backlog_buffer 缓冲区里，因此 这个缓冲区里会保存着最近传播的写命令。网络断开后，当从服务器重新连上主服务器时，从服务器会通过 psync 命令将自己的复制偏移量 slave_repl_offset 发送给主服务器，主服务器根据自己的 master_repl_offset 和 slave_repl_offset 之间的差距，然后来决定对从服务器执行哪种同步操作</p>
+<ul>
+<li>如果判断出从服务器要读取的数据还在 repl_backlog_buffer 缓冲区里，那么主服务器将采用<strong>增量同步</strong>的方式；</li>
+<li>相反，如果判断出从服务器要读取的数据已经不存在 repl_backlog_buffer 缓冲区里，那么主服务器将采用<strong>全量同步</strong>的方式。</li>
+</ul>
 <h2 id="主从复制架构中，过期-key-如何处理？"><a href="#主从复制架构中，过期-key-如何处理？" class="headerlink" title="主从复制架构中，过期 key 如何处理？"></a>主从复制架构中，过期 key 如何处理？</h2><p>主节点处理了一个key或者通过淘汰算法淘汰了一个key，这个时间主节点模拟一条del命令发送给从节点，从节点收到该命令后，就进行删除key的操作。</p>
 <h2 id="Redis-是同步复制还是异步复制？"><a href="#Redis-是同步复制还是异步复制？" class="headerlink" title="Redis 是同步复制还是异步复制？"></a>Redis 是同步复制还是异步复制？</h2><p>Redis 主节点每次收到写命令之后，先写到内部的缓冲区，然后异步发送给从节点。</p>
 <h2 id="主从复制中两个-Buffer-replication-buffer-、repl-backlog-buffer-有什么区别？"><a href="#主从复制中两个-Buffer-replication-buffer-、repl-backlog-buffer-有什么区别？" class="headerlink" title="主从复制中两个 Buffer(replication buffer 、repl backlog buffer)有什么区别？"></a>主从复制中两个 Buffer(replication buffer 、repl backlog buffer)有什么区别？</h2><ul>
@@ -653,7 +694,7 @@
 </ul>
 <h2 id="为什么会有哨兵机制？"><a href="#为什么会有哨兵机制？" class="headerlink" title="为什么会有哨兵机制？"></a>为什么会有哨兵机制？</h2><p>在 Redis 的主从架构中，由于主从模式是读写分离的，如果主节点（master）挂了，那么将没有主节点来服务客户端的写操作请求，也没有主节点给从节点（slave）进行数据同步了。它的作用是实现<strong>主从节点故障转移</strong>。它会监测主节点是否存活，如果发现主节点挂了，它就会选举一个从节点切换为主节点，并且把新主节点的相关信息通知给从节点和客户端。</p>
 <p>哨兵机制主要负责三件事情：<strong>监控、选主、通知</strong></p>
-<h2 id="如何判断主节点真的故障了？"><a href="#如何判断主节点真的故障了？" class="headerlink" title="如何判断主节点真的故障了？"></a>如何判断主节点真的故障了？</h2><p>哨兵会每隔1s给所有主从节点发送PING命令，当主从节点收到PING命令后，会发送响应命令给哨兵，如果主从节点没在规定时间内响应命令，则认为其主观下线，但是对于判断主节点是否故障通常是部署多个哨兵节点，这样会减少误判，当其中一个哨兵认为主节点主观下线时，就会报告给其他哨兵，其他哨兵对该主节点来进行判断是否下线，最后根据总的赞同票数来判断是否客观下线。</p>
+<h2 id="如何判断主节点真的故障了？"><a href="#如何判断主节点真的故障了？" class="headerlink" title="如何判断主节点真的故障了？"></a>如何判断主节点真的故障了？</h2><p>哨兵会每隔1s给所有主从节点发送心跳包检测节点是否正常，当主从节点收到心跳包后，会发送响应给哨兵，如果主从节点没在规定时间内响应命令，则认为其<strong>主观下线</strong>，但是对于判断主节点是否故障通常是部署多个哨兵节点，这样会减少误判，当其中一个哨兵认为主节点主观下线时，就会报告给其他哨兵，其他哨兵对该主节点来进行判断是否下线，最后根据总的赞同票数来判断是否<strong>客观下线</strong>。</p>
 <h2 id="由哪个哨兵进行主从故障转移？"><a href="#由哪个哨兵进行主从故障转移？" class="headerlink" title="由哪个哨兵进行主从故障转移？"></a>由哪个哨兵进行主从故障转移？</h2><p>首先由发现主节点主观下线的哨兵作为候选者，然后发起投票，当只有一个候选者时，它可以把票投给自己或者他人，然后征询其他哨兵的投票，要成功选举为leader，需要满足两个条件</p>
 <ul>
 <li>拿到半数以上的赞成票；</li>
@@ -662,15 +703,38 @@
 <p>当有多个候选者时，候选者会先给自己投一票，然后向其他哨兵发起投票请求。如果投票者先收到「候选者 A」的投票请求，就会先投票给它，如果投票者用完投票机会后，收到「候选者 B」的投票请求后，就会拒绝投票。这时，候选者 A 先满足了上面的那两个条件，所以「候选者 A」就会被选举为 Leader。</p>
 <h2 id="为什么哨兵节点至少要有3个？"><a href="#为什么哨兵节点至少要有3个？" class="headerlink" title="为什么哨兵节点至少要有3个？"></a>为什么哨兵节点至少要有3个？</h2><p>如果要是2个哨兵，其中一个哨兵要成为leader，必须获得2票，如果一个哨兵挂掉，则无法完成主从切换。</p>
 <h2 id="主从故障转移的过程是怎样的？"><a href="#主从故障转移的过程是怎样的？" class="headerlink" title="主从故障转移的过程是怎样的？"></a>主从故障转移的过程是怎样的？</h2><ul>
-<li>在已下线主节点（旧主节点）属下的所有「从节点」里面，挑选出一个从节点，并将其转换为主节点<ul>
+<li><p>在已下线主节点（旧主节点）属下的所有「从节点」里面，挑选出一个从节点，并将其转换为主节点</p>
+<ul>
 <li>过滤掉已经离线的从节点；</li>
 <li>过滤掉历史网络连接状态不好的从节点；</li>
-<li>将剩下的从节点，进行三轮考察：优先级（越小越靠前）、复制进度（越大越靠前）、ID 号（选择小的）。在每一轮考察过程中，如果找到了一个胜出的从节点，就将其作为新主节点。</li>
+<li>将剩下的从节点，进行三轮考察：优先级（越大越靠前）、复制进度（越大越靠前）、ID 号（选择小的）。在每一轮考察过程中，如果找到了一个胜出的从节点，就将其作为新主节点。</li>
 </ul>
+<p><img src="/2024/07/05/Redis%E5%85%AB%E8%82%A1%E6%96%87/image-20240804112929929.png" srcset="/img/loading.gif" lazyload alt="选举主节点规则"></p>
 </li>
-<li>让已下线主节点属下的所有「从节点」修改复制目标，修改为复制「新主节点」；</li>
-<li>将新主节点的 IP 地址和信息，通过「发布者&#x2F;订阅者机制」通知给客户端；</li>
-<li>继续监视旧主节点，当这个旧主节点重新上线时，将它设置为新主节点的从节点；</li>
+<li><p>让已下线主节点属下的所有「从节点」修改复制目标，修改为复制「新主节点」；</p>
+</li>
+<li><p>将新主节点的 IP 地址和信息，通过「发布者&#x2F;订阅者机制」通知给客户端；</p>
+</li>
+<li><p>继续监视旧主节点，当这个旧主节点重新上线时，将它设置为新主节点的从节点；</p>
+</li>
+</ul>
+<h2 id="Redis集群模式了解吗"><a href="#Redis集群模式了解吗" class="headerlink" title="Redis集群模式了解吗"></a>Redis集群模式了解吗</h2><p>当 Redis 缓存数据量大到一台服务器无法缓存时，就需要使用 <strong>Redis 切片集群</strong>（Redis Cluster ）方案，它将数据分布在不同的服务器上，以此来降低系统对单主节点的依赖，从而提高 Redis 服务的读写性能。</p>
+<p>Redis Cluster 方案采用哈希槽（Hash Slot），来处理数据和节点之间的映射关系。在 Redis Cluster 方案中，<strong>一个切片集群共有 16384 个哈希槽</strong>，这些哈希槽类似于数据分区，每个键值对都会根据它的 key，被映射到一个哈希槽中</p>
+<p><strong>哈希槽被映射到具体的 Redis 节点上的两种方案</strong>：</p>
+<ul>
+<li><strong>平均分配：</strong> 在使用 cluster create 命令创建 Redis 集群时，Redis 会自动把所有哈希槽平均分布到集群节点上。比如集群中有 9 个节点，则每个节点上槽的个数为 16384&#x2F;9 个。</li>
+<li><strong>手动分配：</strong> 可以使用 cluster meet 命令手动建立节点间的连接，组成集群，再使用 cluster addslots 命令，指定每个节点上的哈希槽个数。</li>
+</ul>
+<p><strong>优点</strong></p>
+<ul>
+<li><strong>高可用性</strong>：Redis集群最主要的优点是提供了高可用性，节点之间采用主从复制机制，可以保证数据的持久性和容错能力，哪怕其中一个节点挂掉，整个集群还可以继续工作。</li>
+<li><strong>高性能：</strong>Redis集群采用分片技术，将数据分散到多个节点，从而提高读写性能。当业务访问量大到单机Redis无法满足时，可以通过添加节点来增加集群的吞吐量。</li>
+<li><strong>扩展性好：</strong>Redis集群的扩展性非常好，可以根据实际需求动态增加或减少节点，从而实现可扩展性。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>部署和维护较为复杂</li>
+<li><strong>集群同步问题：</strong>当某些节点失败或者网络出故障，集群中数据同步的问题也会出现。数据同步的复杂度和工作量随着节点的增加而增加，同步时间也较长，导致一定的读写延迟。</li>
 </ul>
 <h2 id="数据库和缓存如何保持一致性？"><a href="#数据库和缓存如何保持一致性？" class="headerlink" title="数据库和缓存如何保持一致性？"></a>数据库和缓存如何保持一致性？</h2><ul>
 <li>先更新数据库，再更新缓存</li>
@@ -703,6 +767,32 @@
 </ul>
 </li>
 <li>订阅 MySQL binlog，再操作缓存：「<strong>先更新数据库，再删缓存</strong>」的策略的第一步是更新数据库，那么更新数据库成功，就会产生一条变更日志，记录在 binlog 里。于是我们就可以通过订阅 binlog 日志，拿到具体要操作的数据，然后再执行缓存删除。</li>
+</ul>
+<h2 id="Redis分布式锁的实现原理是什么"><a href="#Redis分布式锁的实现原理是什么" class="headerlink" title="Redis分布式锁的实现原理是什么"></a>Redis分布式锁的实现原理是什么</h2><p><strong>分布式锁是用于分布式环境下并发控制的一种机制，用于控制某个资源在同一时刻只能被一个应用所使用</strong>。</p>
+<p><img src="/2024/07/05/Redis%E5%85%AB%E8%82%A1%E6%96%87/image-20240804155009164.png" srcset="/img/loading.gif" lazyload alt="分布式锁"></p>
+<p>基于Redis节点实现分布式锁时，对于加锁操作，需要满足三个条件：</p>
+<ul>
+<li>加锁包括了读取锁变量、检查锁变量值和设置锁变量值三个操作，但需要以原子操作的方式完成，所以，我们使用 SET 命令带上 NX 选项来实现加锁；</li>
+<li>锁变量需要设置过期时间，以免客户端拿到锁后发生异常，导致锁一直无法释放，所以，我们在 SET 命令执行时加上 EX&#x2F;PX 选项，设置其过期时间；</li>
+<li>锁变量的值需要能区分来自不同客户端的加锁操作，以免在释放锁时，出现误释放操作，所以，我们使用 SET 命令设置锁变量值时，每个客户端设置的值是一个唯一值，用于标识客户端；</li>
+</ul>
+<p>命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">SET lock_key unique_value NX PX 10000<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>lock_key 就是 key 键；</li>
+<li>unique_value 是客户端生成的唯一的标识，区分来自不同客户端的锁操作；</li>
+<li>NX 代表只在 lock_key 不存在时，才对 lock_key 进行设置操作；</li>
+<li>PX 10000 表示设置 lock_key 的过期时间为 10s，这是为了避免客户端发生异常而无法释放锁。</li>
+</ul>
+<p><strong>解锁的过程就是将lock_key键删除(del lock_key)，但不能乱删，要保证执行操作的客户端就是加锁的客户端</strong>。</p>
+<p>所以，解锁的时候，我们要先判断锁的 unique_value 是否为加锁客户端，是的话，才将 lock_key 键删除。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs lua">// 释放锁时，先比较 unique_value 是否相等，避免锁的误释放<br><span class="hljs-keyword">if</span> redis.call(<span class="hljs-string">&quot;get&quot;</span>,KEYS[<span class="hljs-number">1</span>]) == ARGV[<span class="hljs-number">1</span>] <span class="hljs-keyword">then</span><br>  <span class="hljs-keyword">return</span> redis.call(<span class="hljs-string">&quot;del&quot;</span>,KEYS[<span class="hljs-number">1</span>])<br><span class="hljs-keyword">else</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>通过使用 SET 命令和 Lua 脚本在 Redis 单节点上完成了分布式锁的加锁和解锁。</p>
+<h2 id="分布式锁的使用场景有哪些"><a href="#分布式锁的使用场景有哪些" class="headerlink" title="分布式锁的使用场景有哪些"></a>分布式锁的使用场景有哪些</h2><ul>
+<li><strong>排他资源访问：</strong> 当多个节点需要访问共享资源时，分布式锁可以确保同一时间只有一个节点能够访问该资源。例如，多个节点同时对数据库中某个表进行写操作，通过分布式锁可以保证只有一个节点能够执行写操作，防止数据的并发冲突。</li>
+<li><strong>避免重复任务：</strong> 在分布式任务调度中，多个节点可能同时收到相同的任务请求。为避免重复执行相同任务，可以使用分布式锁，只有获取到锁的节点可以执行任务，其他节点会等待或放弃执行。</li>
 </ul>
 
                 
@@ -777,7 +867,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年7月6日</div>
+          <div>2024年8月4日</div>
         </div>
       
       
