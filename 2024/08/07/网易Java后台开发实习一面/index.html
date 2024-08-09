@@ -23,18 +23,15 @@
 <meta property="og:site_name" content="无所畏惧的man">
 <meta property="og:description" content="记录了网易一面的所有问题，方便日后复习，算法题待更新，为下次面试打基础！">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/image-20240808111804888.png">
-<meta property="og:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/image-20240808115652992.png">
-<meta property="og:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/image-20240808121011664.png">
-<meta property="og:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/eb4edeb2ba12210c1d2a78f40eb11d0.png">
+<meta property="og:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/index.png">
 <meta property="article:published_time" content="2024-08-07T06:58:44.000Z">
-<meta property="article:modified_time" content="2024-08-09T02:13:42.500Z">
+<meta property="article:modified_time" content="2024-08-09T04:21:05.369Z">
 <meta property="article:author" content="GuoZihan">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="面经">
 <meta property="article:tag" content="实习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/image-20240808111804888.png">
+<meta name="twitter:image" content="https://love-enough.github.io/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/index.png">
   
   
   
@@ -328,7 +325,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年8月9日 上午
+                    本文最后更新于 2024年8月9日 中午
                   
                 
               </p>
@@ -408,11 +405,9 @@
 <h3 id="为什么采用Zookeeper作为注册中心，他相较于有什么优势"><a href="#为什么采用Zookeeper作为注册中心，他相较于有什么优势" class="headerlink" title="为什么采用Zookeeper作为注册中心，他相较于有什么优势"></a>为什么采用Zookeeper作为注册中心，他相较于有什么优势</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cicada-smile/p/13138262.html">微服务技术栈：常见注册中心组件，对比分析 - 知了一笑 - 博客园 (cnblogs.com)</a></p>
 <p>这个好像选择zookeeper真的不太合适🤣，面试的时候还问我为什么不选择Nacos，我答了一大堆zookeeper的比如具有强一致性，还有监听机制，，这个我万万没想到啊，<strong>Nacos更适合做注册中心</strong></p>
 <p>大致原因如下，社区活跃，经过大规模业务验证，不但可以作为微服务注册中心，也支持作RPC框架Dubbo的注册中心，且有完善的中文文档，总结下来就一句话：<strong>通用中间件，省时；文档详细，省心。</strong></p>
-<h3 id="netty的零拷贝问题"><a href="#netty的零拷贝问题" class="headerlink" title="netty的零拷贝问题"></a>netty的零拷贝问题</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jK41127EP/?spm_id_from=333.337.search-card.all.click&vd_source=08080c102af1e26d657bce7e89999959">Netty 什么是零拷贝机制 面试官必问_哔哩哔哩_bilibili</a></p>
-<ul>
-<li>Netty的接收和发送ByteBuffer采用DIRECT BUFFERS，使用堆外直接内存进行Socket读写，不需要进行字节缓冲区的二次拷贝。如果使用传统的堆内存（HEAP BUFFERS）进行Socket读写，JVM会将堆内存Buffer拷贝一份到直接内存中，然后才写入Socket中。相比于堆外直接内存，消息在发送过程中多了一次缓冲区的内存拷贝。</li>
-<li>Netty提供了组合Buffer对象，可以聚合多个ByteBuffer对象，用户可以像操作一个Buffer那样方便的对组合Buffer进行操作，避免了传统通过内存拷贝的方式将几个小Buffer合并成一个大的Buffer。</li>
-</ul>
+<h3 id="netty的零拷贝问题"><a href="#netty的零拷贝问题" class="headerlink" title="netty的零拷贝问题"></a>netty的零拷贝问题</h3><p>传统零拷贝技术可看视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jK41127EP/?spm_id_from=333.337.search-card.all.click&vd_source=08080c102af1e26d657bce7e89999959">Netty 什么是零拷贝机制 面试官必问_哔哩哔哩_bilibili</a></p>
+<p><img src="/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/image-20240809121817431.png" srcset="/img/loading.gif" lazyload alt="Netty零拷贝技术"></p>
+<p>Netty零拷贝技术具体实现细节请见文章：[16 IO 加速：与众不同的 Netty 零拷贝技术 (lianglianglee.com)](<a target="_blank" rel="noopener" href="https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Netty">https://learn.lianglianglee.com/专栏/Netty</a> 核心原理剖析与 RPC 实践-完&#x2F;16  IO 加速：与众不同的 Netty 零拷贝技术.md)</p>
 <h3 id="MySQL的隔离级别是如何实现的"><a href="#MySQL的隔离级别是如何实现的" class="headerlink" title="MySQL的隔离级别是如何实现的"></a>MySQL的隔离级别是如何实现的</h3><p>MySQL的隔离级别有：读未提交，读已提交，可重复读以及串行化</p>
 <ul>
 <li><strong>对于读未提交，直接读取当前最新的数据就可以了</strong></li>
@@ -521,7 +516,9 @@
 </ul>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1676115">教你设计一个超牛逼的本地缓存！-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><img src="/2024/08/07/%E7%BD%91%E6%98%93Java%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2/eb4edeb2ba12210c1d2a78f40eb11d0.png" srcset="/img/loading.gif" lazyload alt="跳跃得分"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//待更新</span><br></code></pre></td></tr></table></figure>
+<p><strong>解题思路：动态规划+单调队列</strong></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/jump-game-vi/solutions/2631981/yi-bu-bu-you-hua-cong-di-gui-dao-di-tui-84qn3/">1696. 跳跃游戏 VI - 力扣（LeetCode）</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">maxResult</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums, <span class="hljs-type">int</span> k)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> nums.length;<br>        <span class="hljs-type">int</span>[] f = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n];<br>        f[<span class="hljs-number">0</span>] = nums[<span class="hljs-number">0</span>];<br>        Deque&lt;Integer&gt; q = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayDeque</span>&lt;&gt;();<br>        q.add(<span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt; n; ++i) &#123;<br>            <span class="hljs-comment">//出</span><br>            <span class="hljs-keyword">if</span>(q.peekFirst() &lt; i - k)<br>                q.pollFirst();<br>            <span class="hljs-comment">//转移</span><br>            f[i] = f[q.peekFirst()] + nums[i];<br>            <span class="hljs-comment">//入</span><br>            <span class="hljs-keyword">while</span>(!q.isEmpty() &amp;&amp; f[i] &gt;= f[q.peekLast()])<br>                q.pollLast();<br>            q.add(i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> f[n - <span class="hljs-number">1</span>];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
                 
