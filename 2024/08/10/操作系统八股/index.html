@@ -1,0 +1,1071 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="GuoZihan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对一些常见的操作系统面试题进行整理，大部分资料来源于网上资源，拒绝转载!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统八股">
+<meta property="og:url" content="https://love-enough.github.io/2024/08/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%AB%E8%82%A1/index.html">
+<meta property="og:site_name" content="无所畏惧的man">
+<meta property="og:description" content="对一些常见的操作系统面试题进行整理，大部分资料来源于网上资源，拒绝转载!">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://love-enough.github.io/2024/08/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%AB%E8%82%A1/index.png">
+<meta property="article:published_time" content="2024-08-10T02:03:10.000Z">
+<meta property="article:modified_time" content="2024-08-10T10:08:30.386Z">
+<meta property="article:author" content="GuoZihan">
+<meta property="article:tag" content="八股">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://love-enough.github.io/2024/08/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%AB%E8%82%A1/index.png">
+  
+  
+  
+  <title>操作系统八股 - 无所畏惧的man</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/scrollAnimation.css">
+<link rel="stylesheet" href="/css/selection.css">
+<link rel="stylesheet" href="/css/mk.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"love-enough.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"6yoTduI2I2n2uTiOyxHOpVNZ-gzGzoHsz","app_key":"CuG32gSXDFOZPtNyZjx6BOYR","server_url":"https://6yotdui2.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>无所畏惧的man</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="操作系统八股"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        GuoZihan
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-10 10:03" pubdate>
+          2024年8月10日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          84 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">操作系统八股</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2024年8月10日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="操作系统八股"><a href="#操作系统八股" class="headerlink" title="操作系统八股"></a>操作系统八股</h1><h3 id="谈一谈你对操作系统的理解"><a href="#谈一谈你对操作系统的理解" class="headerlink" title="谈一谈你对操作系统的理解"></a>谈一谈你对操作系统的理解</h3><blockquote>
+<p>操作系统是计算机系统中的大管家，它负责管理和协调计算机的各种资源，为应用程序提供一个安全、高效的运行环境。</p>
+</blockquote>
+<p>主要作用包括：</p>
+<ul>
+<li><strong>资源管理</strong>：操作系统负责管理计算机的硬件资源，如处理器、内存、硬盘和外部设备等，以便合理地分配和利用这些资源。它通过调度算法和资源分配机制，确保每个任务或进程都能得到适当的资源。</li>
+<li><strong>进程管理</strong>：操作系统能同时运行多个程序，通过进程管理，它可以控制程序的执行、调度和协作，以便提高计算机的整体效率。它负责创建、终止、挂起和恢复进程，以及管理进程之间的通信与同步。</li>
+<li>文件管理：操作系统负责管理计算机的文件系统，方便用户存储和获取数据，确保数据的安全性和完整性。它提供了文件的创建、读写、删除和重命名等操作，以及文件的权限管理和保护。</li>
+<li><strong>用户界面</strong>：操作系统提供了与计算机交互的用户界面，可以是命令行界面或图形用户界面（GUI），使得用户可以方便地使用计算机。用户可以通过输入指令或点击图标进行操作和访问系统功能。</li>
+<li><strong>错误检测和恢复</strong>：操作系统能够监测和处理软件和硬件错误，提供错误检测和恢复的机制，以保证计算机的稳定性和可靠性。它可以监测和捕获程序的异常、处理硬件故障、提供备份和恢复机制等。</li>
+</ul>
+<h3 id="谈一谈你对中断的理解"><a href="#谈一谈你对中断的理解" class="headerlink" title="谈一谈你对中断的理解"></a>谈一谈你对中断的理解</h3><p><strong>中断是计算机系统中的一种基本操作，用于处理外部事件或内部异常</strong>。在计算机运行过程中，可能会发生各种外部或内部的事件，比如硬件故障、IO请求、定时器事件等，这些事件需要在合适的时机中断正常的程序执行。</p>
+<p><strong>中断的作用是打断当前的程序执行流程，转而执行与中断事件相关的处理程序</strong>。处理程序执行完毕后，再返回到原来的程序继续执行。中断可以实现多任务的并发执行，提高系统的响应能力和效率。</p>
+<p><strong>中断可以分为硬件中断和软件中断</strong>。硬件中断是由硬件设备触发的，比如外部设备的请求、时钟中断等。软件中断是由软件程序主动触发的，比如系统调用、异常处理等。</p>
+<h3 id="中断和异常有什么区别"><a href="#中断和异常有什么区别" class="headerlink" title="中断和异常有什么区别"></a>中断和异常有什么区别</h3><ul>
+<li><strong>触发条件</strong>：中断通常是由外部事务触发的，如用户输入、外设请求等。这些事件不一定与当前执行的程序有关。而异常通常是由程序本身在运行过程中产生的，比如除零错误、非法指令等。</li>
+<li><strong>处理方式</strong>：中断的处理通常是将当前的程序执行指针保存起来，然后切换到中断处理程序去执行，处理完后返回原来指针处继续执行。而异常处理则需要首先确定是不是可以恢复的错误，如果可以恢复，那么在处理完成后可以从出错的地方继续执行；如果不可恢复，那么可能需要终止程序。</li>
+<li><strong>终止与持续</strong>：一般来说，处理完中断后，CPU会恢复执行被中断的程序，而异常可能会导致程序的终止。</li>
+<li><strong>预期性</strong>：中断是可以被预期且常规的行为。例如，系统可以预期硬件设备的中断，并根据这些中断进行响应。然而异常则是非预期的，它们是因为程序错误、硬件问题或其他不可预料的条件产生的。</li>
+<li><strong>指向性</strong>：中断指向的是特定的中断服务程序，而异常指向的是错误处理程序或者是系统。</li>
+</ul>
+<h3 id="一个程序从开始运行到结束的完整过程，简要陈述一下"><a href="#一个程序从开始运行到结束的完整过程，简要陈述一下" class="headerlink" title="一个程序从开始运行到结束的完整过程，简要陈述一下"></a>一个程序从开始运行到结束的完整过程，简要陈述一下</h3><ul>
+<li><strong>编写程序</strong>：程序员根据需求和规范，使用编程语言编写程序代码。</li>
+<li><strong>编译&#x2F;解释</strong>：根据程序的编写语言，将程序源代码转化为机器可执行的形式。对于编译型语言，程序需要通过编译器将源代码编译成机器代码；对于解释型语言，程序会逐行解释执行。</li>
+<li><strong>加载</strong>：操作系统将编译&#x2F;解释后的程序加载到内存中，为运行做准备。加载过程中会分配所需的内存空间，并进行一些初始设置。</li>
+<li><strong>运行</strong>：程序开始执行，通常从程序的入口点开始，在操作系统的调度下，逐行执行程序代码。</li>
+<li><strong>数据处理</strong>：程序根据算法和逻辑对数据进行操作，进行计算、判断、循环等各种处理过程。</li>
+<li><strong>IO操作</strong>：程序可能需要与外设交互，进行输入输出操作。如文件读写、网络通信、用户交互等。</li>
+<li><strong>异常处理</strong>：在程序运行过程中，可能会出现各种异常情况，包括错误、异常输入、资源不足等。程序需要进行适当的异常处理，避免程序崩溃或数据丢失。</li>
+<li><strong>结束运行</strong>：程序执行到结束点，或者通过某种条件判断需要提前结束，程序会执行相应的结束操作。资源会被释放，可能会输出一些结果或保存数据。</li>
+<li><strong>卸载</strong>：程序运行结束后，操作系统会将程序卸载，释放相关资源。</li>
+</ul>
+<h3 id="什么是用户态和核心态"><a href="#什么是用户态和核心态" class="headerlink" title="什么是用户态和核心态"></a>什么是用户态和核心态</h3><blockquote>
+<p>用户态和内核态是操作系统的两种运行状态。</p>
+</blockquote>
+<ul>
+<li><code>内核态</code>：处于内核态的 CPU <strong>可以访问任意的数据，包括外围设备</strong>，比如网卡、硬盘等，处于内核态的 CPU 可以从一个程序切换到另外一个程序，并且<strong>占用 CPU 不会发生抢占情况</strong>，一般处于特权级 0 的状态我们称之为内核态。</li>
+<li><code>用户态</code>：处于用户态的 CPU <strong>只能受限的访问内存，并且不允许访问外围设备</strong>，用户态下的 <strong>CPU 不允许独占</strong>，也就是说 CPU 能够被其他程序获取。</li>
+</ul>
+<h3 id="为什么区分用户态和内核态"><a href="#为什么区分用户态和内核态" class="headerlink" title="为什么区分用户态和内核态"></a>为什么区分用户态和内核态</h3><blockquote>
+<p>用户态（User Mode）和内核态（Kernel Mode）是两种不同的执行状态。这种区分主要是为了保障操作系统的稳定性，安全性以及提高效率。</p>
+</blockquote>
+<ul>
+<li>保护操作系统及关键内核数据：在内核态，操作系统代码有权访问系统的所有资源，而在用户态，应用程序的活动受到限制，不能直接访问硬件或内核数据结构，所有涉及硬件操作的请求都必须通过内核代码（例如设备驱动程序）来完成。这种限制可以避免用户态的应用程序意外或恶意地破坏系统资源。</li>
+<li><strong>安全性</strong>：用户态和内核态的划分是操作系统进行权限管理和访问控制的主要方式，它可以防止用户级应用程序越权访问和操作系统资源，提高系统的安全性。</li>
+<li><strong>系统稳定性</strong>：如果所有程序都在同一权限级别运行，一个程序的错误可能导致整个系统崩溃。通过将权限划分为用户态和内核态，可以有效地防止用户程序的错误影响到整个系统，提高系统的稳定性。</li>
+<li>效率：内核态与用户态的切换会带来一定的开销，但这背后的好处是系统运行的效率和稳定性。例如，IO操作通常需要在内核态进行，以防止用户程序直接控制硬件设备，这样可以防止多个程序同时对一个设备进行操作，引起混乱。</li>
+</ul>
+<h3 id="并发和并行有什么区别"><a href="#并发和并行有什么区别" class="headerlink" title="并发和并行有什么区别"></a>并发和并行有什么区别</h3><ul>
+<li>并发(Concurrency)是<strong>指系统能够处理多个任务的能力，这并不意味着这些任务一定会同时进行</strong>。并发的任务可能会交错进行，因此并发可以在单核CPU上实现。这是因为CPU可以通过时间片轮转或其他任务切换策略，在各个任务之间快速切换，给人以它们在同时进行的错觉。</li>
+<li>并行(Parallelism)则是<strong>指系统同时执行多个任务的能力</strong>。并行显然需要硬件的支持，如多核心或多处理器。在这种情况下，多个任务确实可以在同一时间内进行。例如，现代的多核CPU可以让我们在看电影的同时进行视频编码，每一个任务在不同的处理器核心上执行，这就是并行。</li>
+</ul>
+<h3 id="同步和异步有什么区别"><a href="#同步和异步有什么区别" class="headerlink" title="同步和异步有什么区别"></a>同步和异步有什么区别</h3><ul>
+<li>同步（Synchronous）操作是<strong>在一个操作完成之前，不进行下一个操作</strong>。这是<strong>一种阻塞调用</strong>，也就是说，进行某项操作的过程中，不得不停下来等待，直到这个操作完成。</li>
+<li>异步（Asynchronous）操作是<strong>不需要立刻得到结果，即使未完成也可进行其它操作</strong>。这是<strong>一种非阻塞调用</strong>，也就是说，还没得到结果，就继续做别的事情，不会因为单一操作的等待而阻塞。</li>
+</ul>
+<h3 id="阻塞和非阻塞的区别"><a href="#阻塞和非阻塞的区别" class="headerlink" title="阻塞和非阻塞的区别"></a>阻塞和非阻塞的区别</h3><blockquote>
+<p>阻塞和非阻塞是描述任务或操作在等待结果时的行为方式的概念。</p>
+</blockquote>
+<ul>
+<li>阻塞是指<strong>任务在等待某个操作完成时，暂停自己的执行，并等待操作完成后再继续执行</strong>。在阻塞状态下，任务会一直等待，直到所需的资源或结果就绪。在此期间，任务不能执行其他操作。</li>
+<li>非阻塞是指任务在等待某个操作完成时，不会暂停自己的执行，而是立即返回，继续执行其他任务。非阻塞的任务会周期性地查询所需资源或结果的状态，判断是否就绪，从而决定是否继续执行。</li>
+</ul>
+<p>阻塞适用于需要确保结果完整性和依赖顺序的情况，而非阻塞适用于需要提高并发性和响应性的情况。选择适合的阻塞和非阻塞方式可以提高程序的效率和性能。</p>
+<h3 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h3><p>在操作系统中，进程是<strong>指正在执行的程序实例</strong>。它是计算机系统中的基本执行单位，拥有独立的内存空间和系统资源。每个进程都有自己的指令序列、数据和执行环境。</p>
+<p>进程的创建是通过操作系统调度和管理的，当一个程序被执行时，操作系统会为其创建一个独立的进程。每个进程都有一个唯一的进程标识符（PID），用于在系统中标识和管理进程。</p>
+<p>进程的主要特征包括：</p>
+<ul>
+<li><strong>独立性</strong>：每个进程都有独立的内存空间和系统资源，不会受其他进程的影响。</li>
+<li><strong>执行状态</strong>：进程可以处于运行、就绪、阻塞等不同的执行状态，根据进程调度算法决定执行顺序。</li>
+<li><strong>上下文切换</strong>：由于操作系统需要在不同进程之间进行切换，进程可以通过上下文切换保存和恢复自己的执行环境。</li>
+<li><strong>通信与同步</strong>：进程可以通过进程间通信机制实现信息的交换和资源共享，也可以通过同步机制实现协调和合作。</li>
+</ul>
+<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><blockquote>
+<p>在操作系统中，线程是进程的一部分，是进程内的一个执行单元。与进程相比，线程更轻量级，多个线程可以在同一个进程中并发执行。线程共享进程的内存空间和系统资源，每个线程有独立的程序计数器（PC）和栈空间，但它们可以访问共享的数据和全局变量。</p>
+</blockquote>
+<p>线程的主要特征包括：</p>
+<ul>
+<li><strong>并发执行</strong>：多个线程可以在不同的处理器或核心上同时执行，从而实现并发性。</li>
+<li><strong>共享内存</strong>：线程之间共享同一个进程的地址空间，可以互相访问和修改共享数据。</li>
+<li><strong>轻量级</strong>：相对于进程来说，线程的创建、销毁和切换开销较小，执行效率更高。</li>
+<li><strong>协作与通信</strong>：线程之间可以通过共享内存进行通信和协作，也可以使用同步机制控制线程的执行顺序。</li>
+</ul>
+<h3 id="进程与线程有什么区别"><a href="#进程与线程有什么区别" class="headerlink" title="进程与线程有什么区别"></a>进程与线程有什么区别</h3><blockquote>
+<p>进程是独立的执行实体，拥有独立的内存空间和系统资源；而线程是进程内的执行单元，共享进程的内存空间和系统资源。线程的切换和通信开销较小，并发性更高。选择使用进程还是线程，取决于具体的应用需求。</p>
+</blockquote>
+<ul>
+<li><strong>资源占用</strong><ul>
+<li>进程：每个进程拥有独立的内存空间和系统资源。</li>
+<li>线程：多个线程共享同一个进程的内存空间和系统资源。</li>
+</ul>
+</li>
+<li><strong>调度与切换</strong><ul>
+<li>进程：进程是独立的执行实体，操作系统以进程为单位进行调度，进程的切换开销相对较大。</li>
+<li>线程：线程是进程的一部分，线程的调度和切换开销较小，因为它们共享进程的上下文。</li>
+</ul>
+</li>
+<li><strong>并发性和并行性</strong><ul>
+<li>进程：多个进程可以并发执行，每个进程都有自己的地址空间，可以在多个处理器或核心上并行执行。</li>
+<li>线程：多个线程可以在同一个进程内并发执行，共享进程的地址空间，可以在同一个处理器或核心上并行执行。</li>
+</ul>
+</li>
+<li><strong>用户态和核心态</strong><ul>
+<li>进程：进程切换涉及到用户态到内核态的切换，需要较高的权限和开销。</li>
+<li>线程：线程切换只涉及用户态的切换，开销较小。</li>
+</ul>
+</li>
+<li><strong>创建和销毁</strong><ul>
+<li>进程：创建和销毁进程的开销较大，包括分配独立的内存空间、初始化数据结构等。</li>
+<li>线程：创建和销毁线程的开销相对较小，线程依赖于进程的内存和资源完成创建过程。</li>
+</ul>
+</li>
+</ul>
+<h3 id="为什么有了进程，还要有线程"><a href="#为什么有了进程，还要有线程" class="headerlink" title="为什么有了进程，还要有线程"></a>为什么有了进程，还要有线程</h3><ul>
+<li><strong>提高系统的并发性能</strong>：在单个进程内运行多个线程可以提高系统并行处理能力，使得CPU的利用率更高。</li>
+<li><strong>简化程序设计</strong>：当程序需要处理一些异步或并行的任务时，使用线程可以使程序设计变得更简单。例如，在一个文本编辑器中，一个线程用于键盘输入，另一个线程用于屏幕刷新，这样保证了用户的输入和界面的显示可以同时进行。</li>
+<li><strong>资源共享</strong>：线程之间可以共享进程资源，在很多场景下这是非常有用的。例如，在Web服务器中，每个用户的请求可能会生成一个线程，所有线程共享服务器的资源，如内存、硬盘等，以处理多个并发的用户请求。</li>
+</ul>
+<h3 id="进程有哪些常见的状态，如何切换"><a href="#进程有哪些常见的状态，如何切换" class="headerlink" title="进程有哪些常见的状态，如何切换"></a>进程有哪些常见的状态，如何切换</h3><p><img src="/2024/08/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%AB%E8%82%A1/image-20240810104051400.png" srcset="/img/loading.gif" lazyload alt="进程的五种状态"></p>
+<ul>
+<li><em>NULL -&gt; 创建状态</em>：一个新进程被创建时的第一个状态；</li>
+<li><em>创建状态 -&gt; 就绪状态</em>：当进程被创建完成并初始化后，一切就绪准备运行时，变为就绪状态，这个过程是很快的；</li>
+<li><em>就绪状态 -&gt; 运行状态</em>：处于就绪状态的进程被操作系统的进程调度器选中后，就分配给 CPU 正式运行该进程；</li>
+<li><em>运行状态 -&gt; 结束状态</em>：当进程已经运行完成或出错时，会被操作系统作结束状态处理；</li>
+<li><em>运行状态 -&gt; 就绪状态</em>：处于运行状态的进程在运行过程中，由于分配给它的运行时间片用完，操作系统会把该进程变为就绪态，接着从就绪态选中另外一个进程运行；</li>
+<li><em>运行状态 -&gt; 阻塞状态</em>：当进程请求某个事件且必须等待时，例如请求 I&#x2F;O 事件；</li>
+<li><em>阻塞状态 -&gt; 就绪状态</em>：当进程要等待的事件完成时，它从阻塞状态变到就绪状态；</li>
+</ul>
+<h3 id="进程间的通信方式有哪些，各有什么优缺点"><a href="#进程间的通信方式有哪些，各有什么优缺点" class="headerlink" title="进程间的通信方式有哪些，各有什么优缺点"></a>进程间的通信方式有哪些，各有什么优缺点</h3><blockquote>
+<p>进程间通信（Inter Process Communication，IPC）是一个进程与另一个进程传输和分享数据的机制。</p>
+</blockquote>
+<ul>
+<li><strong>管道</strong>（Pipe）：管道是最早的进程间通信机制，数据可以在父子或兄弟进程间单向流动。<ul>
+<li>优点：简单易用</li>
+<li>缺点：数据只能在有亲缘关系的进程之间传输，并且是无格式的字节流，需要进程自行解析</li>
+</ul>
+</li>
+<li><strong>消息队列</strong>（Message Queue）：消息队列是一种先进先出的队列结构，允许进程将消息发送到队列，并允许其他进程根据消息的优先级从队列中读取。<ul>
+<li>优点：可以在无关进程间传输数据，支持数据的优先级设定</li>
+<li>缺点：数据读写需要系统调用，消耗相对较高，复杂消息可能需要额外处理逻辑</li>
+</ul>
+</li>
+<li><strong>共享内存</strong>（Shared Memory）：共享内存允许多个进程访问同一块内存空间，是最快的IPC方式。<ul>
+<li>优点：无需系统调用，直接读写内存，效率较高</li>
+<li>缺点：需要手动解决进程间的同步问题，开发难度相对较高</li>
+</ul>
+</li>
+<li><strong>信号</strong>（Signal）：信号是一种简单的进程间通信方式，用来通知接收进程有某事件发生。<ul>
+<li>优点：简单，可以异步地通知事件</li>
+<li>缺点：信息量有限，只能传递一个数量，不能携带更复杂的信息</li>
+</ul>
+</li>
+<li><strong>套接字</strong>（Socket）：套接字可以在不同机器上的进程间通信。<ul>
+<li>优点：可以进行跨机器的通信，通用性强</li>
+<li>缺点：开发相对复杂，数据读写需要系统调用，效率较低</li>
+</ul>
+</li>
+<li><strong>信号量</strong>（Semaphore）：信号量常用于多个进程间的同步和互斥问题。</li>
+</ul>
+<h3 id="线程间的通信方式有哪些，各有什么优缺点"><a href="#线程间的通信方式有哪些，各有什么优缺点" class="headerlink" title="线程间的通信方式有哪些，各有什么优缺点"></a>线程间的通信方式有哪些，各有什么优缺点</h3><blockquote>
+<p>线程间的通信方式通常利用同一个进程下线程所共享的资源来实现。</p>
+</blockquote>
+<ul>
+<li><strong>锁机制</strong>（Locks）：当多个线程需要访问共享资源时，可以使用锁机制来避免并发问题。一个线程在访问资源时可以”锁定”该资源，阻止其他线程的访问，直到该线程释放锁。<ul>
+<li>优点：简单而直接</li>
+<li>缺点：必须小心处理，否则可能导致死锁</li>
+</ul>
+</li>
+<li><strong>信号量</strong>（Semaphores）：信号量是一个更为高级的同步机制，可以控制多个线程对共享资源的访问。信号量有一个计数器和一个等待队列组成，计数器表示可用的资源数目。<ul>
+<li>优点：可以控制资源的同时访问数</li>
+<li>缺点：使用不当也可能导致死锁</li>
+</ul>
+</li>
+<li><strong>条件变量</strong>（Condition Variables）：条件变量是另一种同步机制，允许一个线程等待某个条件满足。当条件满足时，可以通知一个或多个正在等待的线程。条件变量通常与互斥锁一起使用。<ul>
+<li>优点：能够实现更复杂的同步，如按顺序访问等</li>
+<li>缺点：使用不当可能导致死锁或饥饿现象</li>
+</ul>
+</li>
+<li><strong>事件驱动</strong>（Event-driven）：在事件驱动的模型中，线程之间通过等待和触发事件来进行通信。这种方式不仅适用于线程间的通信，也可以用于进程或异步输入&#x2F;输出等的通信。<ul>
+<li>优点：适应性强，可以应对多种不同的通信需求</li>
+<li>缺点：需要编程模型支持，且在设计和实现上可能较为复杂</li>
+</ul>
+</li>
+<li><strong>线程本地存储</strong>（Thread-Local Storage，TLS）：有些变量是线程不安全的，例如静态变量，全局变量等，这些变量如果在多线程环境下共享，可能会造成不可预料的结果。为了解决这个问题，我们可以为每个线程提供一份该变量的副本，这就是线程本地存储。<ul>
+<li>优点：能避免资源竞争</li>
+<li>缺点：会增加内存的使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程的地址空间里有什么"><a href="#进程的地址空间里有什么" class="headerlink" title="进程的地址空间里有什么"></a>进程的地址空间里有什么</h3><h3 id="线程切换要保存哪些上下文"><a href="#线程切换要保存哪些上下文" class="headerlink" title="线程切换要保存哪些上下文"></a>线程切换要保存哪些上下文</h3><h3 id="什么是协程？和线程有什么区别"><a href="#什么是协程？和线程有什么区别" class="headerlink" title="什么是协程？和线程有什么区别"></a>什么是协程？和线程有什么区别</h3><blockquote>
+<p>协程（Coroutine）是一种用户级别的轻量级线程。它们的调度完全由用户控制，而不是由操作系统内核控制。与线程不同，协程的上下文切换极其快速且成本低，主要因为它所需保存和恢复的状态较少。</p>
+</blockquote>
+<p>对于协程和线程的比较，参考以下四个方面</p>
+<ul>
+<li><strong>切换开销</strong>：线程由系统内核控制，切换开销大；协程由程序员在用户空间控制，切换开销小。</li>
+<li><strong>调度</strong>：线程是抢占式调度，需要操作系统来进行线程的调度切换；协程是非抢占式的，由协程自身决定何时进行切换，这也是其使用复杂性的来源之一。</li>
+<li><strong>数据共享和同步</strong>：线程并发编程需要考虑锁等同步机制的问题；而协程在同一时间只有一个运行，它对共享资源的访问不需要加锁，只需要确保在协程切换的时候保存好共享资源的状态即可。</li>
+<li><strong>应用场景</strong>：线程适合cpu密集型任务; 协程适合IO密集型任务。</li>
+</ul>
+<h3 id="什么是僵尸进程"><a href="#什么是僵尸进程" class="headerlink" title="什么是僵尸进程"></a>什么是僵尸进程</h3><blockquote>
+<p>僵尸进程（Zombie Process）指的是一个已经结束执行的子进程，但其父进程尚未调用wait()或waitpid()函数来获取子进程的终止状态信息。在这种情况下，子进程的进程控制块(PCB)仍然存在系统中，但没有正常退出，因此处于僵尸状态。</p>
+</blockquote>
+<p><strong>主要原因</strong></p>
+<p>进程在结束执行后，父进程并没有及时处理子进程的终止状态信息。通常，父进程会通过调用wait()或waitpid()函数来等待子进程的退出，并获取其终止状态。若父进程没有这样做，子进程就会成为僵尸进程。</p>
+<p><strong>解决方法</strong></p>
+<p>虽然僵尸进程本身无害，但过多的僵尸进程可能是不可取的。为了避免僵尸进程的积累，父进程应适时调用wait()或waitpid()来获取终止状态信息，并通过kill()或终止自身来回收僵尸进程。在某些情况下，可以使用信号处理程序，如SIGCHLD信号来自动处理子进程的退出状态。</p>
+<h3 id="如果僵尸进程太多，会出现什么问题"><a href="#如果僵尸进程太多，会出现什么问题" class="headerlink" title="如果僵尸进程太多，会出现什么问题"></a>如果僵尸进程太多，会出现什么问题</h3><ul>
+<li><strong>资源浪费</strong>：僵尸进程会占用系统的一些资源（如PID、内存等），当僵尸进程过多时，会导致系统的资源浪费，降低系统的运行效率。</li>
+<li><strong>进程管理困难</strong>：僵尸进程会使得进程管理变得复杂。在进程终止后，其父进程需要调用wait()函数或者相关的系统调用来回收其资源，如果父进程没有正确处理僵尸进程，会导致僵尸进程无法完全终止并释放资源。</li>
+<li><strong>进程满载</strong>：在某些情况下，如果系统产生大量的僵尸进程，可能会导致系统的进程表被填满，无法再创建新的进程来运行其他任务。</li>
+<li><strong>内存泄漏</strong>：僵尸进程的资源无法被回收释放，可能会导致内存泄漏问题，最终导致系统的性能降低或崩溃。</li>
+</ul>
+<h3 id="如何处理过多的僵尸进程呢"><a href="#如何处理过多的僵尸进程呢" class="headerlink" title="如何处理过多的僵尸进程呢"></a>如何处理过多的僵尸进程呢</h3><ul>
+<li><strong>修复父进程</strong>：确保父进程正确处理子进程的终止状态，使用wait()或waitpid()等系统调用来回收僵尸进程的资源。父进程在fork子进程后，应该在适当的时候使用这些系统调用来检查子进程的终止状态，并进行处理。</li>
+<li><strong>手动杀死僵尸进程</strong>：可以使用kill命令结合僵尸进程的PID来手动杀死僵尸进程。使用命令”ps aux | grep Z”来查找僵尸进程的PID，然后使用”kill PID”命令来杀死该进程。但这只是临时性的处理方式，仍然需要修复父进程来避免僵尸进程的产生。</li>
+<li><strong>编写垃圾回收程序</strong>：可以编写一个定期运行的垃圾回收程序来扫描系统中的僵尸进程，并回收它们的资源。这个程序可以使用系统调用waitpid()来检查并回收僵尸进程的资源。</li>
+<li><strong>修改子进程创建方式</strong>：通过修改子进程的创建方式，可以避免产生僵尸进程。例如，使用fork()后紧接着调用exec()或_exit()来替换原始的进程映像，并在父进程中忽略SIGCHLD信号，这样子进程终止时不会成为僵尸进程。</li>
+<li><strong>调整系统资源限制</strong>：适当调整系统的资源限制，如进程表大小、最大进程数等限制，以防止系统中过多的僵尸进程积累。</li>
+</ul>
+<h3 id="一个进程可以创建多少线程"><a href="#一个进程可以创建多少线程" class="headerlink" title="一个进程可以创建多少线程"></a>一个进程可以创建多少线程</h3><ul>
+<li>在理论上，一个进程可以创建的线程数目由其系统资源限制，比如内存、CPU等。实际上，当一个进程创建大量线程时，由于每个线程都都需要一定的系统资源（例如，存储线程的上下文消息、栈空间等），所以当系统资源耗尽时，无法再创建新的线程。</li>
+<li>从操作系统的角度讲，没有硬性的规定一个进程最多可以创建多少个线程，具体的数量取决于操作系统的实现和配置。</li>
+</ul>
+<h3 id="进程的调度算法有哪些"><a href="#进程的调度算法有哪些" class="headerlink" title="进程的调度算法有哪些"></a>进程的调度算法有哪些</h3><blockquote>
+<p>调度算法是指根据系统的资源分配策略所规定的资源分配算法。</p>
+</blockquote>
+<ul>
+<li><strong>先来先服务</strong>（FCFS，First-Come, First-Served）：按照进程到达的先后顺序进行调度，先到达的进程先执行，适用于短作业时间的场景。但长作业时间的进程可能会导致等待时间较长，又称为<strong>非抢占调度算法</strong>。</li>
+<li><strong>最短作业优先</strong>（SJF，Shortest Job First）：根据进程的执行时间，选择剩余时间最短的进程优先执行。这种算法可以减少平均等待时间，但需要准确估计每个进程的执行时间，且不适用于长作业时间的进程。</li>
+<li><strong>优先级调度</strong>（Priority Scheduling）：为每个进程分配优先级，优先级高的进程先执行。可以根据进程的优先级动态调整调度顺序，但可能会导致低优先级的进程饥饿。</li>
+<li><strong>轮转调度</strong>（Round Robin）：将CPU时间切片分配给每个进程，按照轮转的方式进行调度。每个进程在一个时间片内执行，如果时间片用完，则将进程放到队列尾部继续等待，适用于多任务并发执行。</li>
+<li><strong>多级反馈队列调度</strong>（Multilevel Feedback Queue）：将进程根据优先级划分为多个队列，每个队列具有不同的时间片大小。进程根据到达时间和优先级进入对应的队列，并按照轮转调度算法执行。可根据进程的行为和执行情况调整优先级和时间片大小。</li>
+<li><strong>最短剩余时间优先</strong>（SRTF，Shortest Remaining Time First）：类似于SJF算法，但考虑到新进程的到达时间，如果有更短剩余执行时间的进程到达，则抢占当前进程。</li>
+</ul>
+<h3 id="进程终止的方式"><a href="#进程终止的方式" class="headerlink" title="进程终止的方式"></a>进程终止的方式</h3><ul>
+<li><strong>正常终止</strong>：进程完成任务后，调用exit()系统调用或者main函数执行完毕，进程会自动终止。</li>
+<li><strong>异常终止</strong>：进程遇到致命错误，例如除零错误、内存访问错误等，操作系统会强制终止进程。</li>
+<li><strong>人工终止</strong>：用户通过操作系统提供的终止命令（如kill命令）来终止进程。</li>
+<li><strong>父进程终止</strong>：父进程终止时，所有子进程会收到一个SIGCHLD信号，子进程会被操作系统终止。</li>
+<li><strong>系统关机</strong>：当系统关闭时，操作系统会终止所有运行的进程。</li>
+</ul>
+<h3 id="谈一谈你对锁的理解"><a href="#谈一谈你对锁的理解" class="headerlink" title="谈一谈你对锁的理解"></a>谈一谈你对锁的理解</h3><p>在操作系统中，锁是<strong>一种用于控制多线程和多进程访问共享资源的同步机制</strong>。当多个线程或进程需要访问某个共享资源时，如果没有适当的保护措施，会发生各种问题，比如数据不一致性。</p>
+<p>锁的基本工作原理是：当一个线程或进程想要访问一个共享资源，它首先会尝试获得锁–如果锁是可用状态（也就是说锁“打开”或者”未锁”），那么该线程或进程会锁住它，然后访问该资源。如果锁不可用（也就是说已经“上锁”或者“被锁定”），则该线程或进程必须等待，直到拥有该锁的线程或进程释放它。</p>
+<ul>
+<li>互斥锁（Mutex）：保证同时只有一个线程或进程能够执行某一段临界区的代码。这是最简单，也是最基本的一种锁类型。</li>
+<li>读写锁（Read-Write Lock）：允许多个线程同时读取某一资源，但在写入该资源时只能由一个线程进行。这种锁能提高系统的并发性。</li>
+</ul>
+<h3 id="乐观锁和悲观锁有什么区别"><a href="#乐观锁和悲观锁有什么区别" class="headerlink" title="乐观锁和悲观锁有什么区别"></a>乐观锁和悲观锁有什么区别</h3><blockquote>
+<p>乐观锁和悲观锁是并发控制中两种不同的策略，用于处理多个线程对共享资源的并发访问问题。悲观锁假设会有冲突发生，因此在访问共享资源前进行加锁；而乐观锁假设不会有冲突发生，在更新操作时进行冲突检测。选择哪种锁策略应根据具体场景和需求来决定。</p>
+</blockquote>
+<ul>
+<li><strong>悲观锁</strong>（Pessimistic Locking）：<strong>悲观锁的策略是在访问共享资源之前，假设会发生冲突并进行保护</strong>。在悲观锁机制下，如果一个线程要访问共享资源，它会假设其他线程可能会对该资源进行修改，因此会将资源加锁，直到完成操作后才会释放锁。</li>
+<li><strong>乐观锁</strong>（Optimistic Locking）：<strong>乐观锁的策略是在访问共享资源时不加锁，而是在更新操作时进行冲突检测</strong>。线程在读取共享资源时，不会对其加锁，而是记录下读取时的版本号或其他标识信息。在提交更新操作时，会再次检查共享资源是否被其他线程修改过。如果没有冲突，就执行更新操作；如果有冲突，就放弃当前更新并重新尝试。</li>
+<li><strong>性能比较</strong>：悲观锁会在访问共享资源之前就加锁，即使没有实际的冲突，也会造成性能的损失。而乐观锁避免了大部分的锁竞争，提高了并发性能。但是，如果冲突频繁发生，乐观锁需要不断地进行重试，可能会导致性能下降。</li>
+</ul>
+<h3 id="操作系统是如何实现原子操作的"><a href="#操作系统是如何实现原子操作的" class="headerlink" title="操作系统是如何实现原子操作的"></a>操作系统是如何实现原子操作的</h3><blockquote>
+<p>原子操作（Atomic Operations）是不可中断的一个或一系列操作。一旦原子操作开始，就会独占直到完成，无法在中间阶段被其他操作打断。</p>
+</blockquote>
+<h3 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h3><p>死锁（Deadlock）是指在多任务环境下，当两个或更多的任务各自拥有一个资源并且等待获取另一个任务持有的资源时，就会发生的一种状态。涉及的任务无法继续执行，因为每个任务都在等待其他任务释放资源，但是没有任务会释放它的资源，因为它们都在等待。这就形成了一个循环的等待状态，从而导致了死锁。</p>
+<p><strong>死锁的四个必要条件</strong></p>
+<ul>
+<li><strong>互斥条件</strong>：一个资源只能由一个任务拥有，在资源释放之前任何其他任务都无法请求到。</li>
+<li><strong>占有并等待</strong>：一个任务持有至少一个资源，但又申请新的资源，而新资源正被别的任务持有，所以申请任务阻塞，但又对自己已获得的资源保持不放。</li>
+<li><strong>不可抢占</strong>：别的任务不能把已获得的资源从任务中强行回收，资源只能由获得它的任务自行释放。</li>
+<li><strong>循环等待</strong>：存在一种可能，即任务之间形成一种任务-资源的环形链，链中每个任务都占有下一个任务所需的资源。</li>
+</ul>
+<h3 id="解决死锁的基本方法"><a href="#解决死锁的基本方法" class="headerlink" title="解决死锁的基本方法"></a>解决死锁的基本方法</h3><p>解决死锁的主要方法可以归结为：死锁预防、死锁避免、死锁检测和恢复。</p>
+<ul>
+<li>死锁预防：预防策略的主要思想是破坏造成死锁的四个必要条件中的至少一个。</li>
+<li>死锁避免：死锁避免采取了一种更加精细的策略。它需要保持关于系统当前的哪些资源被哪些任务占用、哪些资源是空闲的、哪些任务正在等待资源等的信息。然后，操作系统在每次有资源请求时，都会先检查是否授予该资源可能导致系统进入不安全状态（即可能死锁），如果是，就不给任务分配资源。</li>
+<li>死锁检测和恢复：有时，我们可能认为死锁可能发生得比较少，或者避免死锁的成本比较高，所以我们愿意冒险，但是当检测到死锁时需要有一种恢复办法。这就需要一种检测死锁的算法。当检测到死锁后，通常的做法是中止一些任务或抢占一些资源，以解除死锁状态。</li>
+</ul>
+<h3 id="怎么避免死锁"><a href="#怎么避免死锁" class="headerlink" title="怎么避免死锁"></a>怎么避免死锁</h3><blockquote>
+<p>银行家算法</p>
+</blockquote>
+<h3 id="如何解除死锁"><a href="#如何解除死锁" class="headerlink" title="如何解除死锁"></a>如何解除死锁</h3><ul>
+<li><strong>资源抢占</strong>：选择一些进程，并强制终止它们或抢占它们占有的资源，然后将这些资源分配给其他进程。这种方法需要谨慎选择终止或抢占的进程，以及决策哪些资源应该被抢占、如何选择抢占的顺序等。</li>
+<li><strong>回滚</strong>（Rollback）：回滚是将一部分进程的状态和操作撤销到先前的状态，通过释放资源来解除死锁。回滚涉及到保存和回复进程状态的机制，需要合理地决定回滚的程度和方式，以及如何避免进一步的死锁发生。</li>
+<li><strong>进程终止</strong>：选择一些死锁的进程，将它们终止并释放它们占用的资源，以解除死锁。终止进程会导致数据丢失或系统服务中断，因此需要权衡决策。</li>
+</ul>
+<h3 id="什么是物理地址"><a href="#什么是物理地址" class="headerlink" title="什么是物理地址"></a>什么是物理地址</h3><p><strong>物理地址，又称实际地址或绝对地址</strong>，是数据在计算机系统中物理内存（RAM）的实际位置或者地址。这个地址是总线或者内存控制器用来读取或者写入特定的物理内存的。逻辑地址在经过CPU的内存管理单元(MMU)的地址转换后，变成物理地址。这个<strong>物理地址才是数据真正存储的地方</strong>。</p>
+<h3 id="什么是逻辑地址"><a href="#什么是逻辑地址" class="headerlink" title="什么是逻辑地址"></a>什么是逻辑地址</h3><p>在操作系统中，<strong>逻辑地址（有时也被称为虚拟地址），是在运行过程中的程序或进程所看到的地址</strong>。这个地址是由 CPU 生成的，并且不同于物理地址，后者是数据在主存储器RAM中的实际地址。</p>
+<p>对于程序来说，它只需要对内存进行抽象的、逻辑的操作，不用关心具体数据在物理内存中的位置。这就是为什么操作系统需要引入逻辑地址的原因。</p>
+<h3 id="什么是虚拟内存"><a href="#什么是虚拟内存" class="headerlink" title="什么是虚拟内存"></a>什么是虚拟内存</h3><p>虚拟内存是操作系统提供的一种内存管理技术，它通过将实际内存和磁盘空间组合使用，给每个进程提供一个抽象的、看似连续的地址空间。</p>
+<p>在虚拟内存中，每个进程能够访问的内存空间大于实际物理内存的容量。操作系统会根据进程的需要，将部分内存数据存储在物理内存中，并将未使用的数据存储在磁盘上，以便于管理和利用。</p>
+<p>通过使用虚拟内存，操作系统能够为每个进程提供独立的地址空间，使得进程之间相互隔离，更安全稳定。同时，虚拟内存也提供了一种内存扩展机制，使得系统能够运行更多的程序，而不会因为物理内存不足而导致程序崩溃。</p>
+<h3 id="什么是内存泄漏"><a href="#什么是内存泄漏" class="headerlink" title="什么是内存泄漏"></a>什么是内存泄漏</h3><p>一个程序在运行过程中，通常需要不断地申请内存来存储数据和对象。当这些数据或对象不再需要时，应该由程序负责释放这些内存，以便操作系统可以将其分配给其他的程序或者用于其他的用途。但是，湍急的程序可能会忘记（或者没有正确地）释放它申请的内存，尽管它已经不再使用这些内存。随着时间的推移，这些未被释放的内存资源会逐渐积累，导致系统可用内存减少，这就是内存泄漏。</p>
+<p><strong>内存泄漏可能会导致程序运行缓慢，严重时可能会导致系统资源不足，最终可能导致程序或系统崩溃。</strong></p>
+<h3 id="内存泄漏和内存溢出有什么区别"><a href="#内存泄漏和内存溢出有什么区别" class="headerlink" title="内存泄漏和内存溢出有什么区别"></a>内存泄漏和内存溢出有什么区别</h3><blockquote>
+<p>内存泄漏是指未正确释放不再使用的内存，导致系统内存的浪费；而内存溢出是指申请的内存超过了系统可用内存大小，可能导致程序崩溃或无法响应。</p>
+</blockquote>
+<ul>
+<li><strong>引发原因</strong>：内存泄漏通常是由程序中未正确释放内存的错误操作引起的，例如忘记调用释放内存的函数、指针引用不正确等。而内存溢出通常是由程序在执行过程中，动态申请的内存超过了系统的限制，尤其在递归函数调用、无限循环等情况下更容易发生。</li>
+<li><strong>影响范围</strong>：内存泄漏只会影响程序本身，逐渐占用系统内存，导致程序性能下降甚至崩溃。而内存溢出是系统级的问题，可能会影响其他正在运行的程序，导致整个系统崩溃。</li>
+<li><strong>调试和解决</strong>：内存泄漏通过内存分析工具和代码分析来发现和解决，需要找到未释放内存的位置并进行修复。内存溢出的处理较为困难，通常需要优化算法和数据结构，减少内存的占用，并确保程序在申请内存前通过判断来避免申请超出系统限制的内存。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%AB%E8%82%A1/" class="category-chain-item">八股</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%85%AB%E8%82%A1/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="category-chain-item">操作系统</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%AB%E8%82%A1/" class="print-no-link">#八股</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>操作系统八股</div>
+      <div>https://love-enough.github.io/2024/08/10/操作系统八股/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>GuoZihan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月10日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年8月10日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1/" title="计算机网络八股">
+                        <span class="hidden-mobile">计算机网络八股</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"6yoTduI2I2n2uTiOyxHOpVNZ-gzGzoHsz","appKey":"CuG32gSXDFOZPtNyZjx6BOYR","path":"window.location.pathname","placeholder":"给博主留下点什么吧！","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/scrollAnimation.js"></script>
+<script src="/js/duration.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
