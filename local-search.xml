@@ -4,6 +4,66 @@
   
   
   <entry>
+    <title>格灵深瞳后台开发一面</title>
+    <link href="/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/"/>
+    <url>/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/</url>
+    
+    <content type="html"><![CDATA[<h1 id="格灵深瞳后台开发一面"><a href="#格灵深瞳后台开发一面" class="headerlink" title="格灵深瞳后台开发一面"></a>格灵深瞳后台开发一面</h1><blockquote><p>全程开放题，可能跟公司开发用Go语言有关，面试官没法问太细的技术要点。</p></blockquote><h3 id="实习的期望和目标是什么"><a href="#实习的期望和目标是什么" class="headerlink" title="实习的期望和目标是什么"></a>实习的期望和目标是什么</h3><ul><li>个人层面：希望能够在实习过程中通过实践学习提高自己的技术能力，能够学习到真正的企业级开发所必备的技能。</li><li>公司层面：如果有幸能够加入公司这个大团队，希望在自己力所能及的范围内，做出自己的一份贡献。</li></ul><h3 id="为什么拿RPC框架来练手"><a href="#为什么拿RPC框架来练手" class="headerlink" title="为什么拿RPC框架来练手"></a>为什么拿RPC框架来练手</h3><p>现在的开发项目大多是分布式架构，不同于以前的单体架构。所以通过对RPC框架的学习，能够学习到基本的分布式设计思想，在写项目的过程中，也了解了服务限流、服务熔断的概念和实现方法，以及负载均衡的算法实现，这些可以为以后做更大的项目打下坚实的基础。</p><h3 id="做项目有哪些收获"><a href="#做项目有哪些收获" class="headerlink" title="做项目有哪些收获"></a>做项目有哪些收获</h3><ul><li>在通信方面，明白了Netty相对于Socket的优势</li><li>明白了分布式设计的基本思想</li><li>学会了Zookeeper和Netty的基本使用</li><li>学会了限流、熔断以及负载均衡的基本思想及其实现</li></ul><h3 id="如何对比序列化协议哪个好的，为什么protobuf更高效呢"><a href="#如何对比序列化协议哪个好的，为什么protobuf更高效呢" class="headerlink" title="如何对比序列化协议哪个好的，为什么protobuf更高效呢"></a>如何对比序列化协议哪个好的，为什么protobuf更高效呢</h3><blockquote><p>json是以传字符串的格式在网络中进行传输的，而Protobuf是采用二进制编码格式来传输</p></blockquote><ul><li><strong>序列化和反序列化的时间</strong>：使用JMH和Faker来进行了测试，发现protobuf的序列化和反序列化时间都比json要小</li><li><strong>占用内存</strong>：Protobuf比JSON少了45个byte。由于ProtoBuf采用二进制格式，数据结构更为紧凑，因此在序列化和反序列化过程中所需的内存较少。<strong>Protobuf比JSON序化以后占用的字节数更少，在网络传输的过程中Protobuf更具有优势。</strong></li><li><strong>对开发者的友好程度</strong>：JSON 开发者能够很好的识别，而Protobuf会出现乱码的情况。这里说明了一个问题：在对程序员的友好程度上JSON优于Protobuf。而且使用Protobuf还需要实现定义一个有关传输对象的数据结构文件，而json在序列化的过程中，可能导致数据类型改变，那么在反序列化时还要检查数据类型是否匹配，否则强制转换。</li></ul><h3 id="http请求针对回过程详细叙述一下"><a href="#http请求针对回过程详细叙述一下" class="headerlink" title="http请求针对回过程详细叙述一下"></a>http请求针对回过程详细叙述一下</h3><h3 id="用生活中的实例场景来类比计算机网络"><a href="#用生活中的实例场景来类比计算机网络" class="headerlink" title="用生活中的实例场景来类比计算机网络"></a>用生活中的实例场景来类比计算机网络</h3><p>计算机网络主要是负责计算机之间的通信。</p><p><em>快递在现实生活中的应用</em></p><h3 id="读书期间是否做过比较用心的项目"><a href="#读书期间是否做过比较用心的项目" class="headerlink" title="读书期间是否做过比较用心的项目"></a>读书期间是否做过比较用心的项目</h3><h3 id="平常用git吗"><a href="#平常用git吗" class="headerlink" title="平常用git吗"></a>平常用git吗</h3><h3 id="为什么用kafka呢，不用其他的呢"><a href="#为什么用kafka呢，不用其他的呢" class="headerlink" title="为什么用kafka呢，不用其他的呢"></a>为什么用kafka呢，不用其他的呢</h3><p><img src="/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/image-20240812203901580.png" alt="Kafka的主要优势"></p><p><img src="/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/image-20240812204030430.png" alt="与其他消息队列相比的优势"></p><h3 id="讲一讲kafka架构"><a href="#讲一讲kafka架构" class="headerlink" title="讲一讲kafka架构"></a>讲一讲kafka架构</h3><p><a href="https://www.cnblogs.com/datadance/p/16292991.html">一文带你搞懂 Kafka 的系统架构（深度好文，值得收藏） - Data跳动 - 博客园 (cnblogs.com)</a></p><p><img src="/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARGF0Yei3s-WKqA==,size_20,color_FFFFFF,t_70,g_se,x_16.png" alt="Kafka基本架构"></p><ul><li><strong>Producer</strong>：生产者，负责将客户端生产的消息发送到 Kafka 中，可以支持消息的异步发送和批量发送；</li><li><strong>broker</strong>：服务代理节点，Kafka 集群中的一台服务器就是一个 broker，可以水平无限扩展，同一个 Topic 的消息可以分布在多个 broker 中；</li><li><strong>Consumer</strong>：消费者，通过连接到 Kafka 上来拉取消息，用于相应的业务逻辑处理。</li><li><strong>Topic</strong>：消息是以 Topic 为单位进行归类的，Topic 在逻辑上可以被认为是一个 Queue，Producer 生产的每一条消息都必须指定一个 Topic，然后 Consumer 会根据订阅的 Topic 到对应的 broker 上去拉取消息；</li><li><strong>Partition</strong>：为了提升整个集群的吞吐量，Topic 在物理上还可以细分多个分区，一个分区在磁盘上对应一个文件夹。由于一个分区只属于一个主题，很多时候也会被叫做主题分区</li></ul><h3 id="为什么计算机里面有些小数不能表示出来"><a href="#为什么计算机里面有些小数不能表示出来" class="headerlink" title="为什么计算机里面有些小数不能表示出来"></a>为什么计算机里面有些小数不能表示出来</h3><p><img src="/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/image-20240812174632103.png" alt="有些小数为什么就是表示不出来"></p><h3 id="除了学习你有其他兴趣爱好吗"><a href="#除了学习你有其他兴趣爱好吗" class="headerlink" title="除了学习你有其他兴趣爱好吗"></a>除了学习你有其他兴趣爱好吗</h3><h3 id="你有没有特别喜欢的技术博主，哪些品质你觉得时榜样"><a href="#你有没有特别喜欢的技术博主，哪些品质你觉得时榜样" class="headerlink" title="你有没有特别喜欢的技术博主，哪些品质你觉得时榜样"></a>你有没有特别喜欢的技术博主，哪些品质你觉得时榜样</h3><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><a href="https://leetcode.cn/problems/swap-nodes-in-pairs/">24. 两两交换链表中的节点 - 力扣（LeetCode）</a></p><p><img src="/2024/08/12/%E6%A0%BC%E7%81%B5%E6%B7%B1%E7%9E%B3%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/24.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B91.png" alt="算法思想"></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * public class ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode next;</span><br><span class="hljs-comment"> *     ListNode() &#123;&#125;</span><br><span class="hljs-comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span><br><span class="hljs-comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> ListNode <span class="hljs-title function_">swapPairs</span><span class="hljs-params">(ListNode head)</span> &#123;<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">dummy</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(-<span class="hljs-number">1</span>, head);<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> dummy;<br>        <span class="hljs-keyword">while</span>(cur.next != <span class="hljs-literal">null</span> &amp;&amp; cur.next.next != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-type">ListNode</span> <span class="hljs-variable">tmp</span> <span class="hljs-operator">=</span> cur.next;<br>            <span class="hljs-type">ListNode</span> <span class="hljs-variable">tmp1</span> <span class="hljs-operator">=</span> cur.next.next.next;<br>            <br>            cur.next = tmp.next;<br>            cur.next.next = tmp;<br>            cur.next.next.next = tmp1;<br><br>            cur = cur.next.next;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dummy.next;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>面经</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+      <tag>面经</tag>
+      
+      <tag>实习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Netty面试题</title>
+    <link href="/2024/08/12/Netty%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <url>/2024/08/12/Netty%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Netty面试题"><a href="#Netty面试题" class="headerlink" title="Netty面试题"></a>Netty面试题</h1><h3 id="什么时Netty"><a href="#什么时Netty" class="headerlink" title="什么时Netty"></a>什么时Netty</h3><p>Netty 是由 JBOSS 提供的一个 Java 开源框架。Netty 提供异步的、基于事件驱动的网络应用程序框架，用以快速开发高性能、高可靠性的网络 IO 程序,是目前最流行的 NIO 框架。</p><h3 id="Netty的高性能体现在哪里"><a href="#Netty的高性能体现在哪里" class="headerlink" title="Netty的高性能体现在哪里"></a>Netty的高性能体现在哪里</h3><ul><li><strong>IO 线程模型</strong>：同步非阻塞；</li><li><strong>零拷贝</strong>：尽量做到不必要的内存拷贝：</li><li><strong>内存池设计</strong>：使用直接内存，并且可重复利用；</li><li><strong>串行化处理读写</strong>：避免使用锁带来的额外开销；</li><li><strong>高性能序列化协议</strong>：支持 protobuf 等高性能序列化协议。</li></ul><h3 id="相比原生NIO有哪些优势"><a href="#相比原生NIO有哪些优势" class="headerlink" title="相比原生NIO有哪些优势"></a>相比原生NIO有哪些优势</h3><ul><li><strong>易用性</strong>：Netty 在 NIO 基础上封装了更加人性化的 API，大大降低开发人员的学习成本，同时还提供了很多开箱即用的工具。</li><li><strong>稳定性</strong>：Netty 修复了 Java NIO 较多已知问题，如 select 空转导致 CPU 100%，TCP 断线重连，Keep-alive 检测等问题。</li><li><strong>高性能</strong>：对象池复用（通过对象复用避免频繁创建和销毁带来的开销）和零拷贝技术。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>八股</category>
+      
+      <category>Netty</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>八股</tag>
+      
+      <tag>Netty</tag>
+      
+      <tag>高性能</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>线程池</title>
     <link href="/2024/08/12/%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
     <url>/2024/08/12/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
@@ -142,9 +202,9 @@
       
       <tag>Java</tag>
       
-      <tag>并发</tag>
-      
       <tag>八股</tag>
+      
+      <tag>并发</tag>
       
     </tags>
     
@@ -173,9 +233,9 @@
       
       <tag>Java</tag>
       
-      <tag>集合</tag>
-      
       <tag>八股</tag>
+      
+      <tag>集合</tag>
       
     </tags>
     
@@ -349,9 +409,9 @@
     
     <tags>
       
-      <tag>Http</tag>
-      
       <tag>Netty</tag>
+      
+      <tag>Http</tag>
       
     </tags>
     
@@ -442,13 +502,13 @@
       
       <tag>Java</tag>
       
+      <tag>Netty</tag>
+      
       <tag>RPC</tag>
       
       <tag>项目</tag>
       
       <tag>Socket</tag>
-      
-      <tag>Netty</tag>
       
     </tags>
     
